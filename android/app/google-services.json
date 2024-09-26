@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "640921276858",
+    "project_id": "controleaprovacao-cdfa9",
+    "storage_bucket": "controleaprovacao-cdfa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640921276858:android:dd85ec34f0576283f10d83",
+        "android_client_info": {
+          "package_name": "com.example.ControleAprovacao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzBuMPl5WaKvrcZyAVZ-XS7rnHiH9CWTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640921276858:android:80cea36574f9482ff10d83",
+        "android_client_info": {
+          "package_name": "com.example.controleAplicacao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzBuMPl5WaKvrcZyAVZ-XS7rnHiH9CWTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640921276858:android:3c1307265e4dac1ef10d83",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzBuMPl5WaKvrcZyAVZ-XS7rnHiH9CWTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
