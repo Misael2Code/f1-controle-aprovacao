@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ControleAprovacao/model/TabBarController.dart';
-import 'package:ControleAprovacao/paginas/Aprovadas.dart';
-import 'package:ControleAprovacao/paginas/Canceladas.dart';
 import 'package:ControleAprovacao/paginas/Modulos.dart';
-import 'package:ControleAprovacao/paginas/Pendentes.dart';
+import 'package:ControleAprovacao/paginas/Consultas.dart';
 import 'package:flutter/widgets.dart';
 
 class Controles extends StatefulWidget {
@@ -102,9 +100,9 @@ class _ControlesState extends State<Controles>
                 controller: tabController.controller,
                 children: const [
                   Modulos(),
-                  Aprovadas(),
-                  Pendentes(),
-                  Canceladas(),
+                  Consultas(rotNap: 'APR'), // Aprovadas
+                  Consultas(rotNap: 'ANA'), // Pendentes
+                  Consultas(rotNap: 'CAN'), // Canceladas
                 ],
               ))),
     );

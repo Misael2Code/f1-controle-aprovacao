@@ -8,14 +8,16 @@ import '../model/Model_ModulosContratados.dart';
 import '../model/Model_Usuario.dart';
 import 'Controles.dart';
 
-class Pendentes extends StatefulWidget {
-  const Pendentes({Key? key}) : super(key: key);
+class Consultas extends StatefulWidget {
+  final String rotNap;
+
+  const Consultas({Key? key, required this.rotNap}) : super(key: key);
 
   @override
-  State createState() => _PendentesState();
+  State createState() => _ConsultasState();
 }
 
-class _PendentesState extends State<Pendentes> {
+class _ConsultasState extends State<Consultas> {
   String apr = '';
   double sizeFont = 8;
   double sizePop = 12;
@@ -36,7 +38,7 @@ class _PendentesState extends State<Pendentes> {
   @override
   void initState() {
     super.initState();
-    pendentes = fetchConsulta('ANA', _rotNap);
+    pendentes = fetchConsulta(widget.rotNap, _rotNap);
   }
 
   @override
@@ -249,7 +251,7 @@ class _PendentesState extends State<Pendentes> {
 
     return ListTile(
       onTap: () => showItemDetails(context, item, apr, sizeFont, sizePop,
-          sizeItem, espaco, _espacoLinhas),
+          sizeItem, espaco, _espacoLinhas, widget.rotNap),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15))),
       selectedTileColor: Colors.blueGrey[50],

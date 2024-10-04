@@ -19,7 +19,8 @@ void showItemDetails(
     double popSize,
     double itemSize,
     double espacoSize,
-    double espacoLinhasSize) {
+    double espacoLinhasSize,
+    String rotNap) {
   sizeFont = fontSize;
   sizePop = popSize;
   sizeItem = itemSize;
@@ -36,7 +37,7 @@ void showItemDetails(
             children: _buildDialogContent(item),
           ),
         ),
-        actions: _buildDialogActions(context, item),
+        actions: _buildDialogActions(context, item, rotNap),
       );
     },
   );
@@ -284,26 +285,36 @@ Widget _buildSeparator() {
   );
 }
 
-List<Widget> _buildDialogActions(BuildContext context, Model_Campos item) {
-  return [
-    ElevatedButton(
-      onPressed: () => _confirmAction(context, item, 'APROVAR'),
-      style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromRGBO(0, 74, 173, 100)),
-      child: const Text(
-        'APROVAR',
-        style: TextStyle(color: Colors.white),
-      ),
+List<Widget> _buildDialogActions(
+    BuildContext context, Model_Campos item, String rotNap) {
+  List<Widget> actions = [];
+
+  if (rotNap.contains('ANA')) {
+    actions.add(_buildDialogButton(context, item, 'APROVAR',
+        const Color.fromRGBO(0, 74, 173, 100), Colors.white));
+    actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
+        const Color.fromRGBO(0, 74, 173, 100)));
+  } else if (rotNap.contains('APR')) {
+    actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
+        const Color.fromRGBO(0, 74, 173, 100)));
+  } else if (rotNap.contains('CAN')) {
+    actions.add(_buildDialogButton(context, item, 'APROVAR',
+        const Color.fromRGBO(0, 74, 173, 100), Colors.white));
+  }
+
+  return actions;
+}
+
+ElevatedButton _buildDialogButton(BuildContext context, Model_Campos item,
+    String actionText, Color backgroundColor, Color textColor) {
+  return ElevatedButton(
+    onPressed: () => _confirmAction(context, item, actionText),
+    style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
+    child: Text(
+      actionText,
+      style: TextStyle(color: textColor),
     ),
-    ElevatedButton(
-      onPressed: () => _confirmAction(context, item, 'CANCELAR'),
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-      child: const Text(
-        'CANCELAR',
-        style: TextStyle(color: Color.fromRGBO(0, 74, 173, 100)),
-      ),
-    ),
-  ];
+  );
 }
 
 void _confirmAction(
