@@ -7,6 +7,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import '../model/Model_ModulosContratados.dart';
 import '../model/Model_Usuario.dart';
 import 'Controles.dart';
+import 'dart:async';
 
 class Consultas extends StatefulWidget {
   final String rotNap;
@@ -24,6 +25,7 @@ class _ConsultasState extends State<Consultas> {
   double sizeItem = 12;
   double espaco = 6;
 
+  Timer? _timer;
   late Future<List<Model_Campos>> pendentes;
   Set<String> itensSelecionados = {};
   final double _espacoLinhas = 10.0;
@@ -39,6 +41,17 @@ class _ConsultasState extends State<Consultas> {
   void initState() {
     super.initState();
     pendentes = fetchConsulta(widget.rotNap, _rotNap);
+    _timer = Timer.periodic(const Duration(minutes: 2), (Timer timer) {
+      setState(() {
+        pendentes = fetchConsulta(widget.rotNap, _rotNap);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -52,31 +65,66 @@ class _ConsultasState extends State<Consultas> {
     );
   }
 
-  Widget buildFloatingActionButtons(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        buildFloatingActionButton(
-          context,
-          Icons.check_outlined,
-          Colors.green,
-          'Tem certeza que deseja aprovar os itens selecionados?',
-          (pendente) {
-            approveItem(pendente);
-          },
-        ),
-        const SizedBox(height: 15),
-        buildFloatingActionButton(
-          context,
-          Icons.clear,
-          Colors.red,
-          'Tem certeza que deseja cancelar os itens selecionados?',
-          (pendente) {
-            cancelItem(pendente);
-          },
-        ),
-      ],
-    );
+  Widget? buildFloatingActionButtons(BuildContext context) {
+    switch (widget.rotNap) {
+      case 'ANA':
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            buildFloatingActionButton(
+              context,
+              Icons.check_outlined,
+              Colors.green,
+              'Tem certeza que deseja aprovar os itens selecionados?',
+              (pendente) {
+                approveItem(pendente);
+              },
+            ),
+            const SizedBox(height: 15),
+            buildFloatingActionButton(
+              context,
+              Icons.clear,
+              Colors.red,
+              'Tem certeza que deseja cancelar os itens selecionados?',
+              (pendente) {
+                cancelItem(pendente);
+              },
+            ),
+          ],
+        );
+      case 'APR':
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            buildFloatingActionButton(
+              context,
+              Icons.clear,
+              Colors.red,
+              'Tem certeza que deseja cancelar os itens selecionados?',
+              (pendente) {
+                cancelItem(pendente);
+              },
+            ),
+          ],
+        );
+      case 'CAN':
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            buildFloatingActionButton(
+              context,
+              Icons.check_outlined,
+              Colors.green,
+              'Tem certeza que deseja aprovar os itens selecionados?',
+              (pendente) {
+                approveItem(pendente);
+              },
+            ),
+          ],
+        );
+      default:
+        return null;
+    }
   }
 
   Widget buildFloatingActionButton(BuildContext context, IconData icon,
@@ -94,7 +142,7 @@ class _ConsultasState extends State<Consultas> {
                 onPressed: () async {
                   String log = await processItems(action);
                   Navigator.pop(context);
-                  showResultDialog(log);
+                  showResultDialog(context, log);
                 },
                 child: const Text('Sim')),
           ],
@@ -122,29 +170,43 @@ class _ConsultasState extends State<Consultas> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => const AlertDialog(
-        content: Center(child: CircularProgressIndicator()),
+      builder: (BuildContext context) => Dialog(
+        child: Container(
+          padding: const EdgeInsets.all(20), // Optional padding
+          width: 200, // Set a specific width
+          height: 100, // Set a specific height
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
       ),
     );
   }
 
-  void showResultDialog(String log) {
+  void showResultDialog(BuildContext context, String log) {
+    switch (log) {
+      case '1: execução sem erros':
+        log = "Processo executado com sucesso!";
+    }
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-              log.contains('1: execução sem erros') ? 'Concluído!' : 'OPS!'),
+          title: Text(log.contains('Processo executado com sucesso!')
+              ? 'Concluído!'
+              : 'OPS!'),
           content: Text(log),
           actions: [
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                if (log.contains('1: execução sem erros')) {
+                if (log.contains('Processo executado com sucesso!')) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const Controles(setRot: 0)));
+                } else {
+                  Navigator.pop(context);
                 }
               },
               child: const Text('OK'),

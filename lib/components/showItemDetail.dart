@@ -38,6 +38,7 @@ void showItemDetails(
           ),
         ),
         actions: _buildDialogActions(context, item, rotNap),
+        actionsAlignment: MainAxisAlignment.center,
       );
     },
   );
@@ -333,7 +334,10 @@ void _confirmAction(
                 child: const Text('Não')),
             TextButton(
                 onPressed: () async {
+                  showLoadingDialogRequest(context);
+                  log = await approveItem(item);
                   Navigator.pop(context);
+                  showResultAction(context, log);
                 },
                 child: const Text('Sim')),
           ],
@@ -350,7 +354,8 @@ void _confirmAction(
                 child: const Text('Não')),
             TextButton(
                 onPressed: () async {
-                  log = await approveItem(item);
+                  showLoadingDialogRequest(context);
+                  log = await cancelItem(item);
                   Navigator.pop(context);
                   showResultAction(context, log);
                 },
@@ -360,6 +365,23 @@ void _confirmAction(
       );
   }
   // Logic to handle approval or cancellation
+}
+
+void showLoadingDialogRequest(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => Dialog(
+      child: Container(
+        padding: const EdgeInsets.all(20), // Optional padding
+        width: 200, // Set a specific width
+        height: 100, // Set a specific height
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    ),
+  );
 }
 
 Future<String> approveItem(Model_Campos pendente) async {
@@ -401,22 +423,29 @@ Future<String> cancelItem(Model_Campos pendente) async {
 }
 
 showResultAction(BuildContext context, String log) {
+  switch (log) {
+    case '1: execução sem erros':
+      log = "Processo executado com sucesso!";
+  }
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title:
-            Text(log.contains('1: execução sem erros') ? 'Concluído!' : 'OPS!'),
+        title: Text(log.contains('Processo executado com sucesso!')
+            ? 'Concluído!'
+            : 'OPS!'),
         content: Text(log),
         actions: [
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              if (log.contains('1: execução sem erros')) {
+              if (log.contains('Processo executado com sucesso!')) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const Controles(setRot: 0)));
+              } else {
+                Navigator.pop(context);
               }
             },
             child: const Text('OK'),

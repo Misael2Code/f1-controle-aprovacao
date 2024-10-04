@@ -1,0 +1,13 @@
+REQUISIÇÃO
+ - é possível cancelar uma requisição aprovada;
+ - não é possível aprovar uma requisição cancelada;
+
+ SOLICITAÇÃO DE COMPRA
+ - não é possível cancelar uma solicitação de compra aprovada:
+    - pois fica travada em processo de aprovação; ou
+    - será originada do movimento de estoque (requisição);
+ - não é possível cancelar uma solicitação de compra originada do movimento de estoque;
+ - é possível aprovar uma soliticação de compra cancelada que não foi originada do movimento de estoque;
+
+ COTAÇÃO
+ 
