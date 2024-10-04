@@ -350,7 +350,7 @@ void _confirmAction(
                 child: const Text('Não')),
             TextButton(
                 onPressed: () async {
-                  String log = await approveItem(item);
+                  log = await approveItem(item);
                   Navigator.pop(context);
                   showResultAction(context, log);
                 },

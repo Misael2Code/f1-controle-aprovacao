@@ -9,7 +9,7 @@ import 'package:ControleAprovacao/requisicoes/Rest_ValidarDNS.dart';
 import 'package:ControleAprovacao/requisicoes/set_Memory.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State createState() => _LoginState();

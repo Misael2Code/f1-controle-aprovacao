@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ControleAprovacao/model/TabBarController.dart';
 import 'package:ControleAprovacao/paginas/Modulos.dart';
 import 'package:ControleAprovacao/paginas/Consultas.dart';
-import 'package:flutter/widgets.dart';
 
 class Controles extends StatefulWidget {
   final int setRot; // O valor que será passado
 
-  const Controles({Key? key, required this.setRot}) : super(key: key);
+  const Controles({super.key, required this.setRot});
 
   @override
   State<Controles> createState() => _ControlesState();

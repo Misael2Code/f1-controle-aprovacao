@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Model_Parametro {
   static late String _Url;
   static late String _Server;

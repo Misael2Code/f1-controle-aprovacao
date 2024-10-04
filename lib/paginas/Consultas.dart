@@ -11,7 +11,7 @@ import 'Controles.dart';
 class Consultas extends StatefulWidget {
   final String rotNap;
 
-  const Consultas({Key? key, required this.rotNap}) : super(key: key);
+  const Consultas({super.key, required this.rotNap});
 
   @override
   State createState() => _ConsultasState();
@@ -539,6 +539,7 @@ class _ConsultasState extends State<Consultas> {
   }
 
 // Função para exibir o nome da entidade
+  /*
   Widget _buildEntityName(String name) {
     return Row(
       children: [
@@ -556,4 +557,5 @@ class _ConsultasState extends State<Consultas> {
       ],
     );
   }
+  */
 }

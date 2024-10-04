@@ -3,7 +3,7 @@ import 'package:ControleAprovacao/model/Model_ModulosContratados.dart';
 import 'package:ControleAprovacao/paginas/Controles.dart';
 
 class Modulos extends StatefulWidget {
-  const Modulos({Key? key}) : super(key: key);
+  const Modulos({super.key});
 
   @override
   State createState() => _ModulosState();
