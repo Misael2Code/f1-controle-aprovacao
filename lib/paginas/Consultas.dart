@@ -36,6 +36,7 @@ class _ConsultasState extends State<Consultas> {
   late TextEditingController _qtdShowController;
   CurrencyTextInputFormatter mask = CurrencyTextInputFormatter.currency(
       symbol: '', name: 'BRL', locale: 'pt-BR');
+  List<Map<String, dynamic>> listAgrupado = [];
 
   @override
   void initState() {
@@ -140,9 +141,10 @@ class _ConsultasState extends State<Consultas> {
                 child: const Text('Não')),
             TextButton(
                 onPressed: () async {
-                  String log = await processItems(action);
+                  //String log = await processItems(action);
                   Navigator.pop(context);
-                  showResultDialog(context, log);
+                  _mostrarDialog(context);
+                  //showResultDialog(context, log);
                 },
                 child: const Text('Sim')),
           ],
@@ -150,6 +152,76 @@ class _ConsultasState extends State<Consultas> {
       ),
       backgroundColor: color,
       child: Icon(icon, color: Colors.white),
+    );
+  }
+
+  void _mostrarDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Itens processados:"),
+          content: SingleChildScrollView(
+            child: listaAgrupados(),
+          ),
+          actions: [
+            TextButton(
+              child: const Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Controles(setRot: 0)));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget listaAgrupados() {
+    double fontSize = 12;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: listAgrupado.map((registro) {
+        String routine = '${registro['rotina']}: ';
+        String number = registro['numero'];
+        String success = registro['sucesso'];
+
+        return Row(
+          children: [
+            Flexible(
+              flex: 12,
+              fit: FlexFit.tight,
+              child: Text(
+                routine,
+                style: TextStyle(
+                    fontSize: fontSize, fontWeight: FontWeight.normal),
+              ),
+            ),
+            Flexible(
+              flex: 4,
+              fit: FlexFit.tight,
+              child: Text(
+                number,
+                style:
+                    TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Flexible(
+              flex: 4,
+              child: Text(
+                success,
+                style:
+                    TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        );
+      }).toList(),
     );
   }
 
@@ -161,6 +233,20 @@ class _ConsultasState extends State<Consultas> {
       if (itensSelecionados.contains(
           '${pendente.codEmp}#${pendente.numDoc}#${pendente.seqDoc}')) {
         log = await action(pendente) ?? log;
+
+        if (log.contains('1: execução sem erros')) {
+          listAgrupado.add({
+            'rotina': pendente.rotDes,
+            'numero': pendente.numDoc,
+            'sucesso': 'Ok'
+          });
+        } else {
+          listAgrupado.add({
+            'rotina': pendente.rotDes,
+            'numero': pendente.numDoc,
+            'sucesso': 'Falha'
+          });
+        }
       }
     }
     return log;
