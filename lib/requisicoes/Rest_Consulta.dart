@@ -59,6 +59,7 @@ Future<List<Model_Campos>> fetchConsulta(String sitApr, String rotNap) async {
       final CcuRes = element.findElements('ccuRes').single.text;
       final SeqEnt = element.findElements('seqEnt').single.text;
       final FilDoc = element.findElements('filDoc').single.text;
+      final SitOcp = element.findElements('sitOcp').single.text;
       return Model_Campos(
         rotDes: RotDes,
         numDoc: NumDoc,
@@ -85,6 +86,7 @@ Future<List<Model_Campos>> fetchConsulta(String sitApr, String rotNap) async {
         qtdEme: QtdDoc,
         seqEnt: SeqEnt,
         filDoc: FilDoc,
+        sitOcp: SitOcp,
       );
     }).toList();
 

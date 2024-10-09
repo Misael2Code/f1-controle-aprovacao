@@ -122,10 +122,13 @@ Widget _buildSubtitle(Model_Campos item) {
   }
 
   return Wrap(
-      direction: Axis.vertical,
+      //direction: Axis.vertical,
       alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      runAlignment: WrapAlignment.center,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(getCode(item),
                 style: const TextStyle(
@@ -290,19 +293,20 @@ List<Widget> _buildDialogActions(
     BuildContext context, Model_Campos item, String rotNap) {
   List<Widget> actions = [];
 
-  if (rotNap.contains('ANA')) {
-    actions.add(_buildDialogButton(context, item, 'APROVAR',
-        const Color.fromRGBO(0, 74, 173, 100), Colors.white));
-    actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
-        const Color.fromRGBO(0, 74, 173, 100)));
-  } else if (rotNap.contains('APR')) {
-    actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
-        const Color.fromRGBO(0, 74, 173, 100)));
-  } else if (rotNap.contains('CAN')) {
-    actions.add(_buildDialogButton(context, item, 'APROVAR',
-        const Color.fromRGBO(0, 74, 173, 100), Colors.white));
+  switch (rotNap) {
+    case 'APR':
+      if (item.rotDes.contains('REQUISIÇÃO')) {
+        actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
+            const Color.fromRGBO(0, 74, 173, 100)));
+      }
+      break;
+    case 'ANA':
+      actions.add(_buildDialogButton(context, item, 'APROVAR',
+          const Color.fromRGBO(0, 74, 173, 100), Colors.white));
+      actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
+          const Color.fromRGBO(0, 74, 173, 100)));
+      break;
   }
-
   return actions;
 }
 
