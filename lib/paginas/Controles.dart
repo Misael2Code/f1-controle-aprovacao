@@ -91,7 +91,7 @@ class _ControlesState extends State<Controles>
                     buildTab(
                         Icons.error_outline_outlined, 'Pendentes', context),
                     buildTab(
-                        Icons.highlight_remove_outlined, 'Canceladas', context),
+                        Icons.highlight_remove_outlined, 'Reprovadas', context),
                   ],
                 ),
               ),

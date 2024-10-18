@@ -53,13 +53,20 @@ Widget _buildDialogTitle(Model_Campos item, BuildContext context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(child: _getIconForRotDes(item.rotDes)),
+            GestureDetector(
+                onTap: () {},
+                child: const Icon(
+                  size: 30,
+                  Icons.info_outline_rounded,
+                  color: Colors.blue,
+                )),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Icon(Icons.close_outlined, color: Colors.grey),
             ),
           ],
         ),
+        //CircleAvatar(child: _getIconForRotDes(item.rotDes)),
         _buildTitleContainer(item.rotDes),
         const SizedBox(height: 12),
         _buildSubtitle(item),
@@ -296,14 +303,14 @@ List<Widget> _buildDialogActions(
   switch (rotNap) {
     case 'APR':
       if (item.rotDes.contains('REQUISIÇÃO')) {
-        actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
+        actions.add(_buildDialogButton(context, item, 'REPROVAR', Colors.white,
             const Color.fromRGBO(0, 74, 173, 100)));
       }
       break;
     case 'ANA':
       actions.add(_buildDialogButton(context, item, 'APROVAR',
           const Color.fromRGBO(0, 74, 173, 100), Colors.white));
-      actions.add(_buildDialogButton(context, item, 'CANCELAR', Colors.white,
+      actions.add(_buildDialogButton(context, item, 'REPROVAR', Colors.white,
           const Color.fromRGBO(0, 74, 173, 100)));
       break;
   }
@@ -347,11 +354,11 @@ void _confirmAction(
           ],
         ),
       );
-    case 'CANCELAR':
+    case 'REPROVAR':
       return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          content: const Text('Tem certeza que deseja cancelar?'),
+          content: const Text('Tem certeza que deseja reprovar?'),
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context),

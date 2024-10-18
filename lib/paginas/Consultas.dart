@@ -1,9 +1,12 @@
+import 'package:ControleAprovacao/components/showInformation.dart';
 import 'package:ControleAprovacao/components/showItemDetail.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ControleAprovacao/model/Model_Campos.dart';
 import 'package:ControleAprovacao/requisicoes/Rest_Aprovar_Cancelar.dart';
 import 'package:ControleAprovacao/requisicoes/Rest_Consulta.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:flutter/widgets.dart';
 import '../model/Model_ModulosContratados.dart';
 import '../model/Model_Usuario.dart';
 import 'Controles.dart';
@@ -59,10 +62,32 @@ class _ConsultasState extends State<Consultas> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: itensSelecionados.isEmpty
-          ? null
+          ? buildFloatingActionButtonsInformation(context)
           : buildFloatingActionButtons(context),
       appBar: buildAppBar(),
       body: Center(child: buildFutureBuilder()),
+    );
+  }
+
+  Widget buildFloatingActionButtonsInformation(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+              mini: true,
+              elevation: 35,
+              backgroundColor: Colors.blueAccent,
+              child: const Icon(
+                size: 32,
+                Icons.help_outline,
+                color: Colors.white70,
+              ),
+              onPressed: () {
+                showInformation(context, widget.rotNap);
+              }),
+        ],
+      ),
     );
   }
 
@@ -86,7 +111,7 @@ class _ConsultasState extends State<Consultas> {
               context,
               Icons.clear,
               Colors.red,
-              'Tem certeza que deseja cancelar os itens selecionados?',
+              'Tem certeza que deseja negar os itens selecionados?',
               (pendente) {
                 cancelItem(pendente);
               },
@@ -101,7 +126,7 @@ class _ConsultasState extends State<Consultas> {
               context,
               Icons.clear,
               Colors.red,
-              'Tem certeza que deseja cancelar os itens selecionados?',
+              'Tem certeza que deseja negar os itens selecionados?',
               (pendente) {
                 cancelItem(pendente);
               },
@@ -141,7 +166,7 @@ class _ConsultasState extends State<Consultas> {
                 child: const Text('Não')),
             TextButton(
                 onPressed: () async {
-                  //String log = await processItems(action);
+                  await processItems(action);
                   Navigator.pop(context);
                   _mostrarDialog(context);
                   //showResultDialog(context, log);
@@ -166,7 +191,10 @@ class _ConsultasState extends State<Consultas> {
           ),
           actions: [
             TextButton(
-              child: const Text("Fechar"),
+              child: const Text(
+                "Fechar",
+                style: TextStyle(color: Colors.blueGrey),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.push(
@@ -187,38 +215,114 @@ class _ConsultasState extends State<Consultas> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: listAgrupado.map((registro) {
-        String routine = '${registro['rotina']}: ';
+        String routine = ' ${registro['rotina']}: ';
+        String product = registro['produto'];
         String number = registro['numero'];
-        String success = registro['sucesso'];
+        String result = registro['resultado'];
 
-        return Row(
+        return Column(
           children: [
-            Flexible(
-              flex: 12,
-              fit: FlexFit.tight,
-              child: Text(
-                routine,
-                style: TextStyle(
-                    fontSize: fontSize, fontWeight: FontWeight.normal),
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+                color: Color.fromRGBO(1, 73, 172, 100),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    routine,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
-            Flexible(
-              flex: 4,
-              fit: FlexFit.tight,
-              child: Text(
-                number,
-                style:
-                    TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-              ),
+            Container(
+              height: 1,
+              color: Colors.grey,
             ),
-            Flexible(
-              flex: 4,
-              child: Text(
-                success,
-                style:
-                    TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    'Nº:',
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 4,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    number,
+                    style: TextStyle(
+                        fontSize: fontSize, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Flexible(
+                  flex: 4,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    'Código:',
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 5,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    product,
+                    style: TextStyle(
+                        fontSize: fontSize, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                if (result.contains('Ok')) ...[
+                  const Flexible(
+                    flex: 3,
+                    fit: FlexFit.tight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.check_circle_rounded,
+                          color: Colors.green,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else ...[
+                  const Flexible(
+                    flex: 3,
+                    fit: FlexFit.tight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.cancel,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
             ),
+            const SizedBox(height: 10),
           ],
         );
       }).toList(),
@@ -235,17 +339,47 @@ class _ConsultasState extends State<Consultas> {
         log = await action(pendente) ?? log;
 
         if (log.contains('1: execução sem erros')) {
-          listAgrupado.add({
-            'rotina': pendente.rotDes,
-            'numero': pendente.numDoc,
-            'sucesso': 'Ok'
-          });
+          print('Sucesso na aprovação por WS');
+          switch (pendente.rotDes) {
+            case 'ORDEM DE COMPRA':
+              listAgrupado.add({
+                'rotina': pendente.rotDes,
+                'produto': ' ',
+                'numero': pendente.numDoc,
+                'resultado': 'Ok'
+              });
+              break;
+            default:
+              listAgrupado.add({
+                'rotina': pendente.rotDes,
+                'produto': pendente.codPro.isNotEmpty
+                    ? pendente.codPro
+                    : pendente.codSer,
+                'numero': pendente.numDoc,
+                'resultado': 'Ok'
+              });
+          }
         } else {
-          listAgrupado.add({
-            'rotina': pendente.rotDes,
-            'numero': pendente.numDoc,
-            'sucesso': 'Falha'
-          });
+          print('Falha na aprovação por WS');
+          switch (pendente.rotDes) {
+            case 'ORDEM DE COMPRA':
+              listAgrupado.add({
+                'rotina': pendente.rotDes,
+                'produto': '',
+                'numero': pendente.numDoc,
+                'resultado': 'Falha'
+              });
+              break;
+            default:
+              listAgrupado.add({
+                'rotina': pendente.rotDes,
+                'produto': pendente.codPro.isNotEmpty
+                    ? pendente.codPro
+                    : pendente.codSer,
+                'numero': pendente.numDoc,
+                'resultado': 'Falha'
+              });
+          }
         }
       }
     }
@@ -414,7 +548,6 @@ class _ConsultasState extends State<Consultas> {
           ),
           _buildHeaderRow(item.rotDes, sizeFont),
           _buildInfoRow(item.numDoc, 'R\$ ${item.vlrApr}', sizeItem),
-          SizedBox(height: espaco),
           _buildConditionalRow(
             condition: item.rotDes.contains('ORDEM DE COMPRA'),
             firstLabel: 'EMISSÃO',
@@ -445,7 +578,7 @@ class _ConsultasState extends State<Consultas> {
           ] else ...[
             const SizedBox(height: 0),
           ],
-          const SizedBox(height: 5),
+          //const SizedBox(height: 5),
         ],
       ),
       onLongPress: () {
@@ -521,9 +654,10 @@ class _ConsultasState extends State<Consultas> {
     required double sizeItem,
   }) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               condition ? firstLabel : secondLabel,
@@ -536,14 +670,15 @@ class _ConsultasState extends State<Consultas> {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: sizeItem,
-                color: Colors.black87,
-                fontWeight: FontWeight.normal,
+            Expanded(
+              child: Text(
+                value,
+                style: TextStyle(
+                  fontSize: sizeItem,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ],
@@ -681,7 +816,7 @@ class _ConsultasState extends State<Consultas> {
               color: Colors.black,
               fontSize: sizeItem,
               fontWeight: FontWeight.bold),
-        )
+        ),
       ],
     );
   }

@@ -14,7 +14,7 @@ Future<String> Cotacao(
   final response = await http.post(
     Uri.parse(url),
     headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-    body: '''       
+    body: '''
           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
             <soapenv:Body>
               <ser:AprovarCotacoes>
@@ -69,7 +69,7 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-      body: '''       
+      body: '''
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
               <soapenv:Body>
                 <ser:AprovarRequisicoes>
@@ -95,12 +95,10 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
       late final txtRet;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
-
-      final tpResultado = parsedXml.findAllElements('tpResultado').single.text;
-      final erroExecucao =
-          parsedXml.findAllElements('erroExecucao').single.text;
       final resultado = parsedXml.findAllElements('resultado').single.text;
+      print('resultado: $resultado');
       final document = await xml.XmlDocument.parse(response.body);
+      print('document: $document');
       final list =
           await document.findAllElements('gridRetorno').map((node) async {
         txtRet = await node
@@ -109,15 +107,9 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
             .replaceAll('</txtRet>)', '')
             .replaceAll('(<txtRet>', '');
       }).toList();
-      return tpResultado.contains('1')
+      return resultado.contains('Processado com sucesso')
           ? '1: execução sem erros'
-          : erroExecucao +
-              ' | ' +
-              tpResultado +
-              ' | ' +
-              resultado +
-              ' | ' +
-              txtRet; // Original "txtRet" no erroExecucao
+          : txtRet;
     } else {
       return 'Desculpe! Houve um erro de conexão';
     }
@@ -129,7 +121,7 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-      body: '''       
+      body: '''
           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
             <soapenv:Body>
               <ser:Cancelar>
@@ -182,7 +174,7 @@ Future<String> OrdemCompra(
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-      body: '''       
+      body: '''
           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
              <soapenv:Header/>
              <soapenv:Body>
@@ -230,7 +222,7 @@ Future<String> OrdemCompra(
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-      body: '''       
+      body: '''
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
           <soapenv:Body>
             <ser:reprovar>
@@ -284,7 +276,7 @@ Future<String> SolicitacaoCompra(
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-      body: '''       
+      body: '''
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
            <soapenv:Header/>
            <soapenv:Body>
@@ -330,7 +322,7 @@ Future<String> SolicitacaoCompra(
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-      body: '''       
+      body: '''
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
            <soapenv:Header/>
            <soapenv:Body>
