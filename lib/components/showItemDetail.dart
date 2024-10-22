@@ -1,3 +1,4 @@
+import 'package:ControleAprovacao/components/showInformation.dart';
 import 'package:ControleAprovacao/model/Model_Campos.dart';
 import 'package:ControleAprovacao/model/Model_Usuario.dart';
 import 'package:ControleAprovacao/paginas/Controles.dart';
@@ -30,7 +31,7 @@ void showItemDetails(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: _buildDialogTitle(item, context),
+        title: _buildDialogTitle(item, context, rotNap),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +45,8 @@ void showItemDetails(
   );
 }
 
-Widget _buildDialogTitle(Model_Campos item, BuildContext context) {
+Widget _buildDialogTitle(
+    Model_Campos item, BuildContext context, String rotNap) {
   return Center(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +56,9 @@ Widget _buildDialogTitle(Model_Campos item, BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  showInformation(context, rotNap, item.rotDes);
+                },
                 child: const Icon(
                   size: 30,
                   Icons.info_outline_rounded,

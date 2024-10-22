@@ -83,6 +83,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - image/logo.png
+    - image/logotipo.png
     - image/erp_senior.png
     - image/textura-background.png
 

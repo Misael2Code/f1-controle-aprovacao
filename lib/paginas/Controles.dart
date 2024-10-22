@@ -65,18 +65,11 @@ class _ControlesState extends State<Controles>
                   ],
                 )),
                 flexibleSpace: Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: <Color>[
-                        Color.fromRGBO(44, 47, 87, 100),
-                        Color.fromRGBO(1, 73, 172, 100)
-                      ])),
+                  color: const Color.fromRGBO(1, 14, 33, 1),
                 ),
                 bottom: TabBar(
                   controller: tabController.controller,
-                  indicatorColor: Colors.white38,
+                  indicatorColor: Colors.blueAccent,
                   isScrollable: false,
                   labelPadding: EdgeInsets.symmetric(
                       horizontal: (width(context) -
@@ -86,12 +79,14 @@ class _ControlesState extends State<Controles>
                                       4)) /
                           8),
                   tabs: [
-                    buildTab(Icons.grid_view_rounded, 'Rotinas', context),
-                    buildTab(Icons.check_circle_outlined, 'Aprovadas', context),
-                    buildTab(
-                        Icons.error_outline_outlined, 'Pendentes', context),
-                    buildTab(
-                        Icons.highlight_remove_outlined, 'Reprovadas', context),
+                    buildTab(Icons.grid_view_rounded, 'Rotinas', context,
+                        tabController.controller.index),
+                    buildTab(Icons.check_circle_outline, 'Aprovadas', context,
+                        tabController.controller.index),
+                    buildTab(Icons.error_outline_outlined, 'Pendentes', context,
+                        tabController.controller.index),
+                    buildTab(Icons.highlight_remove, 'Reprovadas', context,
+                        tabController.controller.index),
                   ],
                 ),
               ),
@@ -107,30 +102,62 @@ class _ControlesState extends State<Controles>
     );
   }
 
-  Widget buildTab(IconData icon, String text, BuildContext context) {
+  Widget buildTab(IconData icon, String text, BuildContext context, int index) {
     return SizedBox(
       width: menu(text, context),
       child: Tab(
-        child: iconsAba(text, icon),
+        child: iconsAba(text, icon, index),
       ),
     );
   }
 
-  Column iconsAba(String text, IconData icon) {
+  Column iconsAba(String text, IconData icon, int index) {
+    Color iconColor = Colors.white;
+    Color textColor = Colors.white;
+
     switch (text) {
-      case 'Rotinas':
+      case 'Aprovadas':
+        if (index == 1) {
+          iconColor = Colors.blue;
+          textColor = Colors.blue;
+        }
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white),
+            Icon(icon, color: iconColor),
+            Text(text, style: TextStyle(fontSize: 14, color: textColor)),
+          ],
+        );
+      case 'Pendentes':
+        if (index == 2) {
+          iconColor = Colors.blue;
+          textColor = Colors.blue;
+        }
+        return Column(
+          children: [
+            Icon(icon, color: iconColor),
+            Text(text, style: TextStyle(fontSize: 14, color: textColor)),
+          ],
+        );
+      case 'Reprovadas':
+        if (index == 3) {
+          iconColor = Colors.blue;
+          textColor = Colors.blue;
+        }
+        return Column(
+          children: [
+            Icon(icon, color: iconColor),
+            Text(text, style: TextStyle(fontSize: 14, color: textColor)),
           ],
         );
       default:
+        if (index == 0) {
+          iconColor = Colors.blue;
+          textColor = Colors.blue;
+        }
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white),
-            Text(text,
-                style: const TextStyle(fontSize: 14, color: Colors.white)),
+            Icon(icon, color: iconColor),
           ],
         );
     }

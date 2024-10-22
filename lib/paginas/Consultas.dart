@@ -84,7 +84,7 @@ class _ConsultasState extends State<Consultas> {
                 color: Colors.white70,
               ),
               onPressed: () {
-                showInformation(context, widget.rotNap);
+                showInformation(context, widget.rotNap, '');
               }),
         ],
       ),
