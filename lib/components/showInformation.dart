@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-void showInformation(BuildContext context, String situation, String routine) {
+void showInformation(
+    BuildContext context, String situation, String routine, double sizeHeight) {
   showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return Container(
-            height: 600,
+            height: sizeHeight,
             padding: const EdgeInsets.all(12),
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -26,13 +27,312 @@ Widget validationRoutine(String situation, String routine) {
       case 'CAN':
         return buildHelpConsulta('CAN',
             'Esta tela lista todos os documentos que foram reprovados hoje. É útil para verificar rapidamente quais documentos não atenderam aos critérios de aprovação.');
-      default:
+      case 'ANA':
         return buildHelpConsulta('ANA',
             'Aqui você encontra os documentos que ainda aguardam aprovação. Esta tela inclui todos os documentos que ainda não foram analisados, como solicitações de compra, cotações, etc.');
+      case 'AGP':
+        return buildHelpProcess(
+            'Nesta tela é possível visualizar o status referente a cada item processado.');
+      default:
+        return buildHelpModulo(
+            'Esta tela contém todas as rotinas do ERP Senior que são passíveis de controle de aprovação.');
     }
   } else {
     return buildHelpItemDetail(routine);
   }
+}
+
+Widget buildHelpProcess(String concept) {
+  Color colorMain = Colors.black;
+  Color colorFuctions = Colors.black87;
+  double sizeTitle = 22;
+  double sizeContent = 16;
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Container(
+        height: 5,
+        width: 50,
+        decoration: const BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.all(Radius.circular(12))),
+      ),
+      Container(
+          padding: const EdgeInsets.all(24),
+          child: Image.asset(
+            'image/logotipo.png',
+            height: 48,
+          )),
+      Row(
+        children: [
+          const Icon(
+            Icons.gpp_good,
+            color: Colors.blue,
+            size: 24,
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          Expanded(
+            child: Text(
+              concept,
+              style: TextStyle(
+                  color: colorMain,
+                  fontSize: sizeContent,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 12,
+      ),
+      Row(
+        children: [
+          const SizedBox(
+            width: 36,
+          ),
+          Expanded(
+            child: Text(
+              'Caso haja falha no processamento de algum item, processe-o individualmente para obter o detalhamento da falha ocorrida.',
+              style: TextStyle(
+                  color: colorMain,
+                  fontSize: sizeContent,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 12,
+      ),
+      Expanded(
+        child: Container(
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4,
+                    spreadRadius: 1,
+                    offset: Offset(0, 3))
+              ],
+              color: Colors.blue[50],
+              borderRadius: const BorderRadius.all(Radius.circular(24))),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 36,
+                    ),
+                    Text(
+                      'Legenda:',
+                      style: TextStyle(
+                          color: colorFuctions,
+                          fontSize: sizeTitle,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 36,
+                    ),
+                    const Icon(
+                      Icons.cancel,
+                      color: Colors.red,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Falha no processamento do item.',
+                      style: TextStyle(
+                          fontSize: sizeContent, fontWeight: FontWeight.bold),
+                    ))
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 36,
+                    ),
+                    const Icon(
+                      Icons.check_circle_rounded,
+                      color: Colors.green,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Sucesso no processamento do item.',
+                      style: TextStyle(
+                          fontSize: sizeContent, fontWeight: FontWeight.bold),
+                    ))
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildHelpModulo(String concept) {
+  Color colorMain = Colors.black;
+  Color colorFuctions = Colors.black87;
+  double sizeTitle = 22;
+  double sizeContent = 16;
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Container(
+        height: 5,
+        width: 50,
+        decoration: const BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.all(Radius.circular(12))),
+      ),
+      Container(
+          padding: const EdgeInsets.all(24),
+          child: Image.asset(
+            'image/logotipo.png',
+            height: 48,
+          )),
+      Row(
+        children: [
+          const Icon(
+            Icons.gpp_good,
+            color: Colors.blue,
+            size: 24,
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          Expanded(
+            child: Text(
+              concept,
+              style: TextStyle(
+                  color: colorMain,
+                  fontSize: sizeContent,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 12,
+      ),
+      Row(
+        children: [
+          const SizedBox(
+            width: 36,
+          ),
+          Expanded(
+            child: Text(
+              'As rotinas ativas para o seu contrato estão destacadas, enquanto as demais estão em branco.',
+              style: TextStyle(
+                  color: colorMain,
+                  fontSize: sizeContent,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 12,
+      ),
+      Expanded(
+        child: Container(
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4,
+                    spreadRadius: 1,
+                    offset: Offset(0, 3))
+              ],
+              color: Colors.blue[50],
+              borderRadius: const BorderRadius.all(Radius.circular(24))),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 36,
+                    ),
+                    Text(
+                      'Funcionalidades:',
+                      style: TextStyle(
+                          color: colorFuctions,
+                          fontSize: sizeTitle,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                buildFuctions(
+                    36,
+                    Icons.grid_view_outlined,
+                    12,
+                    'Clicando no botão "Todas as Rotinas" você será direcionado para a tela principal do aplicativo, e visualizará todos os documentos de todas as rotinas que estão na sua alçada de aprovação.',
+                    sizeContent,
+                    colorFuctions),
+                const SizedBox(
+                  height: 12,
+                ),
+                buildFuctions(
+                    36,
+                    Icons.ads_click,
+                    12,
+                    'Os demais botões funcionam como um filtro para as telas de "Aprovadas", "Pendentes" e "Reprovadas".',
+                    sizeContent,
+                    colorFuctions),
+                const SizedBox(
+                  height: 12,
+                ),
+                buildFuctions(
+                    36,
+                    Icons.info_outline,
+                    12,
+                    'Para ter acesso ao controle de aprovação de mais rotinas, entre em contato com o nosso comercial.',
+                    sizeContent,
+                    colorFuctions),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 Widget buildHelpItemDetail(String routine) {

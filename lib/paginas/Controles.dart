@@ -47,23 +47,36 @@ class _ControlesState extends State<Controles>
           initialIndex: 2,
           child: Scaffold(
               appBar: AppBar(
-                title: Center(
-                    child: Row(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      getModuleTitle(
-                          widget.setRot), // Usando o setRot do widget
-                      style: const TextStyle(color: Colors.white),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'image/logo_white.png',
+                          height: 44,
+                        ),
+                      ],
                     ),
+                    /*
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          getModuleTitle(
+                              widget.setRot), // Usando o setRot do widget
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
+                        ),
+                      ],
+                    ),*/
                     const SizedBox(
-                      height: 1,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(color: Colors.blueGrey),
-                      ),
-                    ),
+                      height: 12,
+                    )
                   ],
-                )),
+                ),
                 flexibleSpace: Container(
                   color: const Color.fromRGBO(1, 14, 33, 1),
                 ),

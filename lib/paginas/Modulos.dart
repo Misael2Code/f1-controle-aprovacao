@@ -1,3 +1,4 @@
+import 'package:ControleAprovacao/components/showInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:ControleAprovacao/model/Model_ModulosContratados.dart';
 import 'package:ControleAprovacao/paginas/Controles.dart';
@@ -17,13 +18,14 @@ class _ModulosState extends State<Modulos> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
+    return Scaffold(
+      floatingActionButton: buildFloatingActionButtonsInformation(context),
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _buildButton('Todos os Módulos', Icons.grid_view_outlined, () {
+            _buildButton('Todas as Rotinas', Icons.grid_view_outlined, () {
               mod.rotNapSelect = mod.rotNap;
               mod.setRot = 0;
               Navigator.push(
@@ -136,6 +138,27 @@ class _ModulosState extends State<Modulos> {
     );
   }
 
+  Widget buildFloatingActionButtonsInformation(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+              mini: true,
+              elevation: 20,
+              backgroundColor: Colors.transparent,
+              child: Image.asset(
+                'image/logotipo.png',
+                height: 48,
+              ),
+              onPressed: () {
+                showInformation(context, '', '', 650);
+              }),
+        ],
+      ),
+    );
+  }
+
   Widget _buildButton(String title, IconData icon, VoidCallback onPressed) {
     return Row(
       children: [
@@ -186,7 +209,9 @@ class _ModulosState extends State<Modulos> {
         const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.all(2),
-          child: Text(title, style: const TextStyle(fontSize: 22)),
+          child: Text(title,
+              style:
+                  const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         ),
         const SizedBox(height: 5),
       ],
@@ -202,16 +227,17 @@ class _ModulosState extends State<Modulos> {
 
     switch (isEnabled) {
       case true:
-        iconColor = Colors.blue;
-        nextColor = Colors.blue;
-        textColor = Colors.black;
-        backColor = Colors.white; //const Color.fromRGBO(0, 74, 173, 100);
+        iconColor = Colors.white70;
+        nextColor = Colors.white70;
+        textColor = Colors.white;
+        backColor = const Color.fromRGBO(
+            0, 74, 173, 100); //const Color.fromRGBO(0, 74, 173, 100);
         break;
       case false:
         iconColor = Colors.blue;
         nextColor = Colors.blue;
         textColor = Colors.black;
-        backColor = Colors.white38;
+        backColor = Colors.white;
         break;
     }
     return Expanded(
@@ -221,6 +247,7 @@ class _ModulosState extends State<Modulos> {
         padding: const EdgeInsets.all(2),
         child: ElevatedButton(
           style: ButtonStyle(
+            elevation: WidgetStateProperty.all(2),
             shape: WidgetStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0))),
             backgroundColor: WidgetStateProperty.all(backColor),

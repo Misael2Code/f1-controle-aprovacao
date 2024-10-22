@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ControleAprovacao/model/Model_Parametro.dart';
 import 'package:ControleAprovacao/model/Model_Usuario.dart';
@@ -96,9 +97,7 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
       final resultado = parsedXml.findAllElements('resultado').single.text;
-      print('resultado: $resultado');
       final document = await xml.XmlDocument.parse(response.body);
-      print('document: $document');
       final list =
           await document.findAllElements('gridRetorno').map((node) async {
         txtRet = await node

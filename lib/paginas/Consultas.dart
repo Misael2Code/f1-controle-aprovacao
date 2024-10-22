@@ -76,15 +76,14 @@ class _ConsultasState extends State<Consultas> {
         children: [
           FloatingActionButton(
               mini: true,
-              elevation: 35,
-              backgroundColor: Colors.blueAccent,
-              child: const Icon(
-                size: 32,
-                Icons.help_outline,
-                color: Colors.white70,
+              elevation: 20,
+              backgroundColor: Colors.transparent,
+              child: Image.asset(
+                'image/logotipo.png',
+                height: 48,
               ),
               onPressed: () {
-                showInformation(context, widget.rotNap, '');
+                showInformation(context, widget.rotNap, '', 580);
               }),
         ],
       ),
@@ -98,24 +97,18 @@ class _ConsultasState extends State<Consultas> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             buildFloatingActionButton(
-              context,
-              Icons.check_outlined,
-              Colors.green,
-              'Tem certeza que deseja aprovar os itens selecionados?',
-              (pendente) {
-                approveItem(pendente);
-              },
-            ),
+                context,
+                Icons.check_outlined,
+                Colors.green,
+                'Tem certeza que deseja aprovar os itens selecionados?',
+                'Aprovar'),
             const SizedBox(height: 15),
             buildFloatingActionButton(
-              context,
-              Icons.clear,
-              Colors.red,
-              'Tem certeza que deseja negar os itens selecionados?',
-              (pendente) {
-                cancelItem(pendente);
-              },
-            ),
+                context,
+                Icons.clear,
+                Colors.red,
+                'Tem certeza que deseja negar os itens selecionados?',
+                'Reprovar'),
           ],
         );
       case 'APR':
@@ -123,14 +116,11 @@ class _ConsultasState extends State<Consultas> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             buildFloatingActionButton(
-              context,
-              Icons.clear,
-              Colors.red,
-              'Tem certeza que deseja negar os itens selecionados?',
-              (pendente) {
-                cancelItem(pendente);
-              },
-            ),
+                context,
+                Icons.clear,
+                Colors.red,
+                'Tem certeza que deseja negar os itens selecionados?',
+                'Reprovar'),
           ],
         );
       case 'CAN':
@@ -138,14 +128,11 @@ class _ConsultasState extends State<Consultas> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             buildFloatingActionButton(
-              context,
-              Icons.check_outlined,
-              Colors.green,
-              'Tem certeza que deseja aprovar os itens selecionados?',
-              (pendente) {
-                approveItem(pendente);
-              },
-            ),
+                context,
+                Icons.check_outlined,
+                Colors.green,
+                'Tem certeza que deseja aprovar os itens selecionados?',
+                'Aprovar'),
           ],
         );
       default:
@@ -154,7 +141,7 @@ class _ConsultasState extends State<Consultas> {
   }
 
   Widget buildFloatingActionButton(BuildContext context, IconData icon,
-      Color color, String message, Function(Model_Campos) action) {
+      Color color, String message, String action) {
     return FloatingActionButton(
       onPressed: () => showDialog(
         context: context,
@@ -169,7 +156,6 @@ class _ConsultasState extends State<Consultas> {
                   await processItems(action);
                   Navigator.pop(context);
                   _mostrarDialog(context);
-                  //showResultDialog(context, log);
                 },
                 child: const Text('Sim')),
           ],
@@ -185,7 +171,16 @@ class _ConsultasState extends State<Consultas> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Itens processados:"),
+          icon: GestureDetector(
+            onTap: () {
+              showInformation(context, 'AGP', '', 400);
+            },
+            child: Image.asset(
+              'image/logotipo.png',
+              height: 36,
+            ),
+          ),
+          title: const Text("Itens processados"),
           content: SingleChildScrollView(
             child: listaAgrupados(),
           ),
@@ -193,7 +188,7 @@ class _ConsultasState extends State<Consultas> {
             TextButton(
               child: const Text(
                 "Fechar",
-                style: TextStyle(color: Colors.blueGrey),
+                style: TextStyle(color: Colors.black87),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -315,6 +310,7 @@ class _ConsultasState extends State<Consultas> {
                         Icon(
                           Icons.cancel,
                           color: Colors.red,
+                          size: 14,
                         ),
                       ],
                     ),
@@ -329,17 +325,22 @@ class _ConsultasState extends State<Consultas> {
     );
   }
 
-  Future<String> processItems(Function(Model_Campos) action) async {
+  Future<String> processItems(String actions) async {
     String log = '1: execução sem erros';
     showLoadingDialog();
 
     for (Model_Campos pendente in await fetchConsulta('ANA', _rotNap)) {
       if (itensSelecionados.contains(
           '${pendente.codEmp}#${pendente.numDoc}#${pendente.seqDoc}')) {
-        log = await action(pendente) ?? log;
-
+        switch (actions) {
+          case 'Aprovar':
+            log = await approveItem(pendente);
+            break;
+          case 'Reprovar':
+            log = await cancelItem(pendente);
+            break;
+        }
         if (log.contains('1: execução sem erros')) {
-          print('Sucesso na aprovação por WS');
           switch (pendente.rotDes) {
             case 'ORDEM DE COMPRA':
               listAgrupado.add({
@@ -360,7 +361,6 @@ class _ConsultasState extends State<Consultas> {
               });
           }
         } else {
-          print('Falha na aprovação por WS');
           switch (pendente.rotDes) {
             case 'ORDEM DE COMPRA':
               listAgrupado.add({
@@ -437,7 +437,7 @@ class _ConsultasState extends State<Consultas> {
     );
   }
 
-  Future<String?> approveItem(Model_Campos pendente) async {
+  Future<String> approveItem(Model_Campos pendente) async {
     switch (pendente.rotDes) {
       case 'COTAÇÃO':
         return await Cotacao(1, pendente.codEmp, pendente.numDoc,
@@ -452,11 +452,11 @@ class _ConsultasState extends State<Consultas> {
         return await OrdemCompra(
             1, '', pendente.codEmp, pendente.filDoc, pendente.numDoc);
       default:
-        return null;
+        return '';
     }
   }
 
-  Future<String?> cancelItem(Model_Campos pendente) async {
+  Future<String> cancelItem(Model_Campos pendente) async {
     switch (pendente.rotDes) {
       case 'COTAÇÃO':
         return await Cotacao(2, pendente.codEmp, pendente.numDoc,
@@ -471,7 +471,7 @@ class _ConsultasState extends State<Consultas> {
         return await SolicitacaoCompra(
             2, '', pendente.codEmp, pendente.numDoc, pendente.seqDoc);
       default:
-        return null;
+        return '';
     }
   }
 
@@ -603,8 +603,8 @@ class _ConsultasState extends State<Consultas> {
           rotDes,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: sizeFont + 1,
-            color: Colors.blueGrey,
+            fontSize: sizeFont + 3,
+            color: const Color.fromRGBO(1, 14, 33, 1),
           ),
         ),
         Text(

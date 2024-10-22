@@ -85,6 +85,7 @@ flutter:
     - image/logo.png
     - image/logotipo.png
     - image/erp_senior.png
+    - image/logo_white.png
     - image/textura-background.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

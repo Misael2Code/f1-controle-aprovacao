@@ -56,14 +56,29 @@ Widget _buildDialogTitle(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-                onTap: () {
-                  showInformation(context, rotNap, item.rotDes);
-                },
-                child: const Icon(
-                  size: 30,
-                  Icons.info_outline_rounded,
-                  color: Colors.blue,
-                )),
+              onTap: () {
+                double sizeHeight = 0;
+                switch (item.rotDes) {
+                  case 'REQUISIÇÃO':
+                    sizeHeight = 400;
+                    break;
+                  case 'SOLICITAÇÃO DE COMPRA':
+                    sizeHeight = 500;
+                    break;
+                  case 'COTAÇÃO':
+                    sizeHeight = 350;
+                    break;
+                  case 'ORDEM DE COMPRA':
+                    sizeHeight = 350;
+                    break;
+                }
+                showInformation(context, rotNap, item.rotDes, sizeHeight);
+              },
+              child: Image.asset(
+                'image/logotipo.png',
+                height: 24,
+              ),
+            ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Icon(Icons.close_outlined, color: Colors.grey),

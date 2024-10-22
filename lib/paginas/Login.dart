@@ -80,6 +80,7 @@ class _LoginState extends State<Login> {
                   )
                 ],
                 Container(
+                  color: Colors.transparent,
                   padding: const EdgeInsets.all(12),
                   child: Image.asset('image/logo.png', height: _sizeLogo),
                 ),
