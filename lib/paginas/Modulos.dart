@@ -33,27 +33,6 @@ class _ModulosState extends State<Modulos> {
                   MaterialPageRoute(
                       builder: (context) => const Controles(setRot: 0)));
             }),
-            _buildSectionTitle('Mercado'),
-            Row(
-              children: [
-                _buildModuleButton(mod.cod30, 'Pedido de Venda', '',
-                    Icons.shopping_bag_outlined, 30),
-                _buildModuleButton(mod.cod31, 'Pedido de Venda', 'Avalista',
-                    Icons.shopping_bag, 31),
-                _buildModuleButton(mod.cod33, 'Pré-Fatura', '',
-                    Icons.account_balance_wallet_outlined, 33),
-              ],
-            ),
-            Row(
-              children: [
-                _buildModuleButton(
-                    mod.cod42, 'Fatura de Venda', '', Icons.request_quote, 42),
-                _buildModuleButton(mod.cod36, 'Contrato de Venda', '',
-                    Icons.handshake_outlined, 36),
-                _buildModuleButton(mod.cod39, 'Nota Fiscal de Saída', '',
-                    Icons.my_library_books_outlined, 39),
-              ],
-            ),
             _buildSectionTitle('Suprimentos'),
             Row(
               children: [
@@ -81,6 +60,27 @@ class _ModulosState extends State<Modulos> {
                     Icons.request_page_outlined, 21),
                 Expanded(flex: 3, child: Container()),
                 Expanded(flex: 3, child: Container()),
+              ],
+            ),
+            _buildSectionTitle('Mercado'),
+            Row(
+              children: [
+                _buildModuleButton(mod.cod30, 'Pedido de Venda', '',
+                    Icons.shopping_bag_outlined, 30),
+                _buildModuleButton(mod.cod31, 'Pedido de Venda', 'Avalista',
+                    Icons.shopping_bag, 31),
+                _buildModuleButton(mod.cod33, 'Pré-Fatura', '',
+                    Icons.account_balance_wallet_outlined, 33),
+              ],
+            ),
+            Row(
+              children: [
+                _buildModuleButton(
+                    mod.cod42, 'Fatura de Venda', '', Icons.request_quote, 42),
+                _buildModuleButton(mod.cod36, 'Contrato de Venda', '',
+                    Icons.handshake_outlined, 36),
+                _buildModuleButton(mod.cod39, 'Nota Fiscal de Saída', '',
+                    Icons.my_library_books_outlined, 39),
               ],
             ),
             _buildSectionTitle('Finanças'),
