@@ -10,7 +10,6 @@ class Model_Parametro {
     String newValue = value.replaceAll(' ', '');
     newValue = newValue.replaceAll(
         '/g5-senior-services/sapiens_SyncMCWFUsers?wsdl', '');
-    // newValue = newValue.replaceAll('http://', '');
     _Server = newValue;
   }
 

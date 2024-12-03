@@ -166,11 +166,11 @@ class _LoginState extends State<Login> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Informe o endereço DNS'),
+          title: const Text('Informe o Servidor'),
           content: TextFormField(
             controller: _controllerDNS,
-            decoration:
-                const InputDecoration(hintText: 'Exemplo:nome_servidor:porta'),
+            decoration: const InputDecoration(
+                hintText: 'Ex.: https://nome_servidor:porta'),
           ),
           actions: [
             ElevatedButton(

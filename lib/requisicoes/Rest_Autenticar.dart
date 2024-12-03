@@ -1,6 +1,7 @@
 import 'package:ControleAprovacao/model/Model_Usuario.dart';
 import 'package:ControleAprovacao/requisicoes/Rest_Rotinas.dart';
 import 'package:ControleAprovacao/requisicoes/Rest_Usuario.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 
@@ -35,7 +36,7 @@ Future<bool> autenticacao(
   //   return IOClient(ioClient);
   // }
 
-  webLog = '${webLog}/g5-senior-services/sapiens_SyncMCWFUsers?wsdl';
+  webLog = '$webLog/g5-senior-services/sapiens_SyncMCWFUsers?wsdl';
 
   final response = await http.post(
     Uri.parse(webLog),
@@ -45,13 +46,13 @@ Future<bool> autenticacao(
            <soapenv:Header/>\r\n
            <soapenv:Body>\r\n
               <ser:AuthenticateJAAS>\r\n
-                 <user>${username}</user>\r\n
-                 <password>${password}</password>\r\n
+                 <user>$username</user>\r\n
+                 <password>$password</password>\r\n
                  <encryption>0</encryption>\r\n
                  <parameters>\r\n
                     <pmEncrypted>0</pmEncrypted>\r\n
-                    <pmUserName>${username}</pmUserName>\r\n
-                    <pmUserPassword>${password}</pmUserPassword>\r\n
+                    <pmUserName>$username</pmUserName>\r\n
+                    <pmUserPassword>$password</pmUserPassword>\r\n
                  </parameters>\r\n
               </ser:AuthenticateJAAS>\r\n
            </soapenv:Body>\r\n
@@ -65,6 +66,8 @@ Future<bool> autenticacao(
     final pmLogged = parsedXml.findAllElements('pmLogged').single.toString();
     // Se o login foi bem-sucedido, conecta no app.
     if (pmLogged.contains('0')) {
+      debugPrint("Login bem-sucedido");
+
       Autenticar().conectado = true;
 
       await BuscarRotinas();

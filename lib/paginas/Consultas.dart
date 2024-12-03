@@ -107,7 +107,7 @@ class _ConsultasState extends State<Consultas> {
                 context,
                 Icons.clear,
                 Colors.red,
-                'Tem certeza que deseja negar os itens selecionados?',
+                'Tem certeza que deseja reprovar os itens selecionados?',
                 'Reprovar'),
           ],
         );
@@ -119,7 +119,7 @@ class _ConsultasState extends State<Consultas> {
                 context,
                 Icons.clear,
                 Colors.red,
-                'Tem certeza que deseja negar os itens selecionados?',
+                'Tem certeza que deseja reprovar os itens selecionados?',
                 'Reprovar'),
           ],
         );
