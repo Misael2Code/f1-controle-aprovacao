@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ControleAprovacao/components/ShowDialog.dart';
-import 'package:ControleAprovacao/model/Model_Firebase.dart';
+// import 'package:ControleAprovacao/model/Model_Firebase.dart';
 import 'package:ControleAprovacao/paginas/Controles.dart';
 import 'package:ControleAprovacao/requisicoes/Rest_Autenticar.dart';
 import 'package:ControleAprovacao/model/Model_DNS.dart';
@@ -217,8 +217,8 @@ class _LoginState extends State<Login> {
                 children: [CircularProgressIndicator()],
               ),
             ));
-    // Validate DNS
-    if (Model_Firebase().dns.contains(_controllerDNS.text)) {
+    //Validate DNS
+    //if (Model_Firebase().dns.contains(_controllerDNS.text)) {
       // Save DNS and navigate
       ResultadoDNS().conectado = true;
       _dns.DNS = _controllerDNS.text;
@@ -227,10 +227,10 @@ class _LoginState extends State<Login> {
       setMemory(_controllerDNS.text);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Login()));
-    } else {
-      Navigator.pop(context);
-      await _showErrorDialog(context);
-    }
+   // } else {
+   //   Navigator.pop(context);
+    //  await _showErrorDialog(context);
+   // }
   }
 
   Future<void> _showErrorDialog(BuildContext context) async {

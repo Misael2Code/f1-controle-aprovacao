@@ -1,8 +1,6 @@
 name: ControleAprovacao
 description: F1 Tecnologia e Consultoria.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -40,15 +38,15 @@ dependencies:
   currency_text_input_formatter: ^2.2.3 #^2.1.10
   dio: ^5.7.0
   http_client: ^1.5.2
-
+  shared_preferences: ^2.3.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_core: ^3.8.1 # Recursos Básicos
-  cloud_firestore: ^5.5.1 # Banco de Dados
-  firebase_storage: ^12.3.7 # Armazenamento de Arquivos
-  shared_preferences: ^2.2.2
+  #firebase_core: ^3.8.1 # Recursos Básicos
+  #cloud_firestore: ^5.5.1 # Banco de Dados
+  #firebase_storage: ^12.3.7 # Armazenamento de Arquivos
+
 
 dev_dependencies:
   flutter_test:

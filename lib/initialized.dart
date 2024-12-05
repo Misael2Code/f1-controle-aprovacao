@@ -1,10 +1,9 @@
-import 'package:ControleAprovacao/model/Model_Firebase.dart';
 import 'package:ControleAprovacao/model/Model_Parametro.dart';
 import 'package:ControleAprovacao/requisicoes/set_Memory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> Initialized() async {
-  await getAllDnsFirebase();
+  // await getAllDnsFirebase();
   await getMemoryDevice();
   await validation();
 }

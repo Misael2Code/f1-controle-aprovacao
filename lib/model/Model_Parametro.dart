@@ -6,6 +6,7 @@ class Model_Parametro {
   String get GetUrl => _Url;
 
   set Url(String value) {
+    print(value);
     _Url = value;
     String newValue = value.replaceAll(' ', '');
     newValue = newValue.replaceAll(
