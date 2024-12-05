@@ -30,7 +30,7 @@ class DialogHelper {
           content: Text(Autenticar().resultado),
           actions: [
             ElevatedButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],

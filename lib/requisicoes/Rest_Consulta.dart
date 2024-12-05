@@ -21,8 +21,8 @@ Future<List<Model_Campos>> fetchConsulta(String sitApr, String rotNap) async {
                 <password>${usu.password}</password>
                 <encryption>0</encryption>
                 <parameters>
-                  <sitApr>${sitApr}</sitApr>
-                  <rotNap>${rotNap}</rotNap>
+                  <sitApr>$sitApr</sitApr>
+                  <rotNap>$rotNap</rotNap>
                 </parameters>
               </ser:Consulta>
             </soapenv:Body>

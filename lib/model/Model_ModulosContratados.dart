@@ -228,7 +228,7 @@ class Model_ModulosContratados {
     if(_rotNap.isEmpty) {
       _rotNap = value;
     } else {
-      _rotNap = _rotNap + ',' + value;
+      _rotNap = '$_rotNap,$value';
     }
     _rotNapSelect = _rotNap;
   }

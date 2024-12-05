@@ -22,13 +22,13 @@ Future<bool> Autenticacao(
             <soapenv:Header/>\r\n
             <soapenv:Body>\r\n
                <ser:AuthenticateJAAS>\r\n
-                  <user>${username}</user>\r\n
-                  <password>${password}</password>\r\n
+                  <user>$username</user>\r\n
+                  <password>$password</password>\r\n
                   <encryption>0</encryption>\r\n
                   <parameters>\r\n
                      <pmEncrypted>0</pmEncrypted>\r\n
-                     <pmUserName>${username}</pmUserName>\r\n
-                     <pmUserPassword>${password}</pmUserPassword>\r\n
+                     <pmUserName>$username</pmUserName>\r\n
+                     <pmUserPassword>$password</pmUserPassword>\r\n
                   </parameters>\r\n
                </ser:AuthenticateJAAS>\r\n
             </soapenv:Body>\r\n

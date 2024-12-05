@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ControleAprovacao/model/Model_Parametro.dart';
 import 'package:ControleAprovacao/model/Model_Usuario.dart';
@@ -41,15 +40,15 @@ Future<String> Cotacao(
   );
 
   if (response.statusCode == 200) {
-    late final resultado;
+    late final String resultado;
     final body = response.body;
     final parsedXml = xml.XmlDocument.parse(body);
 
     final tpResultado = parsedXml.findAllElements('tpResultado').single.text;
-    final document = await xml.XmlDocument.parse(response.body);
+    final document = xml.XmlDocument.parse(response.body);
     final list =
-        await document.findAllElements('gridRetorno').map((node) async {
-      resultado = await node
+        document.findAllElements('gridRetorno').map((node) async {
+      resultado = node
           .findElements('txtRet')
           .toString()
           .replaceAll('</txtRet>)', '')
@@ -79,10 +78,10 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
                   <encryption>0</encryption>
                   <parameters>
                     <gridRequisicoes>
-                      <codEmp>${CodEmp}</codEmp>
-                      <numEme>${NumEme}</numEme>
-                      <seqEme>${SeqEme}</seqEme>
-                      <codUsu>${CodUsu}</codUsu>
+                      <codEmp>$CodEmp</codEmp>
+                      <numEme>$NumEme</numEme>
+                      <seqEme>$SeqEme</seqEme>
+                      <codUsu>$CodUsu</codUsu>
                       <qtdEme>${QtdEme.replaceAll(RegExp(r','), '.')}</qtdEme>
                     </gridRequisicoes>
                   </parameters>
@@ -93,14 +92,14 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
     );
 
     if (response.statusCode == 200) {
-      late final txtRet;
+      late final String txtRet;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
       final resultado = parsedXml.findAllElements('resultado').single.text;
-      final document = await xml.XmlDocument.parse(response.body);
+      final document = xml.XmlDocument.parse(response.body);
       final list =
-          await document.findAllElements('gridRetorno').map((node) async {
-        txtRet = await node
+          document.findAllElements('gridRetorno').map((node) async {
+        txtRet = node
             .findElements('txtRet')
             .toString()
             .replaceAll('</txtRet>)', '')
@@ -129,9 +128,9 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
                 <encryption>0</encryption>
                 <parameters>
                   <requisicoes>
-                    <codEmp>${CodEmp}</codEmp>
-                    <numEme>${NumEme}</numEme>
-                    <seqEme>${SeqEme}</seqEme>
+                    <codEmp>$CodEmp</codEmp>
+                    <numEme>$NumEme</numEme>
+                    <seqEme>$SeqEme</seqEme>
                   </requisicoes>
                 </parameters>
               </ser:Cancelar>
@@ -141,15 +140,15 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
     );
 
     if (response.statusCode == 200) {
-      late final resultado;
+      late final String resultado;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
 
       final tpResultado =
           parsedXml.findAllElements('tipoResultado').single.text;
-      final document = await xml.XmlDocument.parse(response.body);
-      final list = await document.findAllElements('erros').map((node) async {
-        resultado = await node
+      final document = xml.XmlDocument.parse(response.body);
+      final list = document.findAllElements('erros').map((node) async {
+        resultado = node
             .findElements('txtRet')
             .toString()
             .replaceAll('</txtRet>)', '')
@@ -185,10 +184,10 @@ Future<String> OrdemCompra(
                       <flowInstanceID></flowInstanceID>
                       <flowName></flowName>
                       <ordemCompra>
-                         <codigoEmpresa>${codEmp}</codigoEmpresa>
-                         <codigoFilial>${codFil}</codigoFilial>
-                         <numero>${numOcp}</numero>
-                         <sequencia>${seqOcp}</sequencia>
+                         <codigoEmpresa>$codEmp</codigoEmpresa>
+                         <codigoFilial>$codFil</codigoFilial>
+                         <numero>$numOcp</numero>
+                         <sequencia>$seqOcp</sequencia>
                       </ordemCompra>
                    </parameters>
                 </ser:aprovar>
@@ -198,15 +197,15 @@ Future<String> OrdemCompra(
     );
 
     if (response.statusCode == 200) {
-      late final resultado;
+      late final String resultado;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
 
       final tpResultado =
           parsedXml.findAllElements('codigoResultado').single.text;
-      final document = await xml.XmlDocument.parse(response.body);
-      final list = await document.findAllElements('retorno').map((node) async {
-        resultado = await node
+      final document = xml.XmlDocument.parse(response.body);
+      final list = document.findAllElements('retorno').map((node) async {
+        resultado = node
             .findElements('mensagemErro')
             .toString()
             .replaceAll('</mensagemErro>)', '')
@@ -230,10 +229,10 @@ Future<String> OrdemCompra(
               <encryption>0</encryption>
               <parameters>
                 <ordemCompra>
-                  <sequência>${seqOcp}</sequência>
-                  <codigoEmpresa>${codEmp}</codigoEmpresa>
-                  <codigoFilial>${codFil}</codigoFilial>
-                  <numero>${numOcp}</numero>
+                  <sequência>$seqOcp</sequência>
+                  <codigoEmpresa>$codEmp</codigoEmpresa>
+                  <codigoFilial>$codFil</codigoFilial>
+                  <numero>$numOcp</numero>
                 </ordemCompra>
               </parameters>
             </ser:reprovar>
@@ -243,15 +242,15 @@ Future<String> OrdemCompra(
     );
 
     if (response.statusCode == 200) {
-      late final resultado;
+      late final String resultado;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
 
       final tpResultado =
           parsedXml.findAllElements('codigoResultado').single.text;
-      final document = await xml.XmlDocument.parse(response.body);
-      final list = await document.findAllElements('retorno').map((node) async {
-        resultado = await node
+      final document = xml.XmlDocument.parse(response.body);
+      final list = document.findAllElements('retorno').map((node) async {
+        resultado = node
             .findElements('mensagemErro')
             .toString()
             .replaceAll('</mensagemErro>)', '')
@@ -298,15 +297,15 @@ Future<String> SolicitacaoCompra(
     );
 
     if (response.statusCode == 200) {
-      late final resultado;
+      late final String resultado;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
 
       final tpResultado =
           parsedXml.findAllElements('codigoResultado').single.text;
-      final document = await xml.XmlDocument.parse(response.body);
-      final list = await document.findAllElements('retorno').map((node) async {
-        resultado = await node
+      final document = xml.XmlDocument.parse(response.body);
+      final list = document.findAllElements('retorno').map((node) async {
+        resultado = node
             .findElements('mensagemErro')
             .toString()
             .replaceAll('</mensagemErro>)', '')
@@ -331,10 +330,10 @@ Future<String> SolicitacaoCompra(
                  <encryption>0</encryption>
                  <parameters>
                     <solicitacao>
-                       <codigoEmpresa>${codEmp}</codigoEmpresa>                      
-                       <numeroSolicitacao>${numSol}</numeroSolicitacao>
-                       <sequencia>${seqDoc}</sequencia>
-                       <sequenciaSolicitacao>${seqSol}</sequenciaSolicitacao>
+                       <codigoEmpresa>$codEmp</codigoEmpresa>                      
+                       <numeroSolicitacao>$numSol</numeroSolicitacao>
+                       <sequencia>$seqDoc</sequencia>
+                       <sequenciaSolicitacao>$seqSol</sequenciaSolicitacao>
                     </solicitacao>
                  </parameters>
               </ser:reprovar>
@@ -344,15 +343,15 @@ Future<String> SolicitacaoCompra(
     );
 
     if (response.statusCode == 200) {
-      late final resultado;
+      late final String resultado;
       final body = response.body;
       final parsedXml = xml.XmlDocument.parse(body);
 
       final tpResultado =
           parsedXml.findAllElements('codigoResultado').single.text;
-      final document = await xml.XmlDocument.parse(response.body);
-      final list = await document.findAllElements('retorno').map((node) async {
-        resultado = await node
+      final document = xml.XmlDocument.parse(response.body);
+      final list = document.findAllElements('retorno').map((node) async {
+        resultado = node
             .findElements('mensagemErro')
             .toString()
             .replaceAll('</mensagemErro>)', '')

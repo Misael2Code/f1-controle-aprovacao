@@ -38,5 +38,4 @@ Future<void> BuscarUsuario() async {
     final CodUsu = parsedXml.findAllElements('codUsu').single.text;
     Model_Usuario().codUsu = CodUsu;
   }
-  ;
 }
