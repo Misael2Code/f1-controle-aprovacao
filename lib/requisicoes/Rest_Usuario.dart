@@ -1,5 +1,6 @@
 import 'package:ControleAprovacao/model/Model_Parametro.dart';
 import 'package:ControleAprovacao/model/Model_Usuario.dart';
+import 'package:flutter/foundation.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
 
@@ -33,9 +34,14 @@ Future<void> BuscarUsuario() async {
 
   if (response.statusCode == 200) {
     final body = response.body;
+    
+    //debugPrint(body);
+    
     final parsedXml = xml.XmlDocument.parse(body);
 
     final CodUsu = parsedXml.findAllElements('codUsu').single.text;
     Model_Usuario().codUsu = CodUsu;
+
+    debugPrint("CodUsu: $CodUsu");
   }
 }

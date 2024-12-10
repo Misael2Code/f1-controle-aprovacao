@@ -36,6 +36,7 @@ class _ModulosState extends State<Modulos> {
             _buildSectionTitle('Suprimentos'),
             Row(
               children: [
+                //aqui ativa opcoes
                 _buildModuleButton(
                     mod.cod3, 'Requisição', '', Icons.note_alt_outlined, 3),
                 _buildModuleButton(mod.cod6, 'Solicitação de Compra', '',

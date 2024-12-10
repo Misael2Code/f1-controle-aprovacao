@@ -1,4 +1,6 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+//Nao utilizando (usando dns informado via showdialog)
+
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 // class Model_Firebase {
 //   static String _dns = '';

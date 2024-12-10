@@ -1,16 +1,17 @@
 import 'dart:io';
+import 'package:ControleAprovacao/firebase_options.dart';
 import 'package:ControleAprovacao/welcome.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   // Garantir a inicialização correta dos widgets do Flutter.
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inicializar o Firebase com as opções da plataforma atual.
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  //Inicializar o Firebase com as opções da plataforma atual.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Sobrescrever a configuração de certificados HTTP.
   HttpOverrides.global = MyHttpOverrides();

@@ -2,6 +2,8 @@ import 'package:ControleAprovacao/model/Model_DNS.dart';
 import 'package:ControleAprovacao/model/Model_Parametro.dart';
 import 'package:ControleAprovacao/model/Model_Usuario.dart';
 import 'package:ControleAprovacao/requisicoes/Rest_ValidarDNS.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,14 +33,21 @@ void setMemory(String dns) async {
 
   // set DNS in memory
   prefs.setString("LOGIN_DNS", dns);
+  
 
-  // Set client in memory
-  // FirebaseFirestore.instance.collection('users').get().then((querySnapshot) {
-  //   for (var docSnapshot in querySnapshot.docs) {
-  //     Model_Parametro().Cli = docSnapshot.data().remove(dns);
-  //     prefs.setString("LOGIN_CLI", Model_Parametro().GetCli);
-  //   }
-  // });
+  //Set client in memory
+  FirebaseFirestore.instance.collection('users').get().then((querySnapshot) {
+    
+    
+
+    for (var docSnapshot in querySnapshot.docs) {
+      debugPrint(docSnapshot.data().toString());
+
+      Model_Parametro().Cli = docSnapshot.data().remove(dns);
+      debugPrint("Cliente salvo:" + Model_Parametro().GetCli);
+      prefs.setString("LOGIN_CLI", Model_Parametro().GetCli);
+    }
+  });
 }
 
 // Set an get of user/pass in memory

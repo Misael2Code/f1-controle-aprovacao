@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Model_Parametro {
   static late String _Url;
   static late String _Server;
@@ -6,7 +8,8 @@ class Model_Parametro {
   String get GetUrl => _Url;
 
   set Url(String value) {
-    print(value);
+    debugPrint("Servidor: $value");
+
     _Url = value;
     String newValue = value.replaceAll(' ', '');
     newValue = newValue.replaceAll(
@@ -18,6 +21,8 @@ class Model_Parametro {
 
   set Cli(String value) {
     _Cli = value;
+
+    debugPrint("Cliente: $_Cli");
   }
 
   String get GetServer => _Server;
