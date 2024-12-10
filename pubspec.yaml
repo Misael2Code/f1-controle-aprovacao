@@ -3,7 +3,7 @@ description: F1 Tecnologia e Consultoria.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.2.0+3
+version: 1.4.0+4
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -37,6 +37,7 @@ dev_dependencies:
   json_serializable: ^6.8.0
 
   flutter_launcher_icons: ^0.14.2
+  #Para gerar Icones: flutter pub run flutter_launcher_icons
 
 
 
