@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:ControleAprovacao/firebase_options.dart';
-import 'package:ControleAprovacao/welcome.dart';
+import 'package:controle_aprovacao/firebase_options.dart';
+import 'package:controle_aprovacao/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 

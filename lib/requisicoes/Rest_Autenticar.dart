@@ -1,6 +1,6 @@
-import 'package:ControleAprovacao/model/Model_Usuario.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Rotinas.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Usuario.dart';
+import 'package:controle_aprovacao/model/Model_Usuario.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Rotinas.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
@@ -38,7 +38,6 @@ Future<bool> autenticacao(
 
   webLog = '$webLog/g5-senior-services/sapiens_SyncMCWFUsers?wsdl';
 
- 
   final response = await http.post(
     Uri.parse(webLog),
     headers: {'Content-Type': 'text/xml;charset=UTF-8'},
@@ -60,8 +59,6 @@ Future<bool> autenticacao(
         </soapenv:Envelope>
       ''',
   );
-
-  
 
   // Verifique o código de status da resposta para determinar se o login foi bem-sucedido.
   if (response.statusCode == 200) {

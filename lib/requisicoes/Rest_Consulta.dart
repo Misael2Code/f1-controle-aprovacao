@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
-import 'package:ControleAprovacao/model/Model_Campos.dart';
-import 'package:ControleAprovacao/model/Model_Usuario.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/model/Model_Campos.dart';
+import 'package:controle_aprovacao/model/Model_Usuario.dart';
 import 'package:xml/xml.dart' as xml;
 
 Future<List<Model_Campos>> fetchConsulta(String sitApr, String rotNap) async {

@@ -66,7 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '640921276858',
     projectId: 'controleaprovacao-cdfa9',
     storageBucket: 'controleaprovacao-cdfa9.appspot.com',
-    iosBundleId: 'com.example.untitled',
+    iosBundleId: 'com.f1.ControleAprovacao',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -75,6 +75,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '640921276858',
     projectId: 'controleaprovacao-cdfa9',
     storageBucket: 'controleaprovacao-cdfa9.appspot.com',
-    iosBundleId: 'com.example.untitled',
+    iosBundleId: 'com.f1.ControleAprovacao',
   );
 }

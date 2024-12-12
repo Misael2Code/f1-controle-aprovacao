@@ -1,8 +1,8 @@
-import 'package:ControleAprovacao/initialized.dart';
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
-import 'package:ControleAprovacao/paginas/Controles.dart';
-import 'package:ControleAprovacao/paginas/Login.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Autenticar.dart';
+import 'package:controle_aprovacao/initialized.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/paginas/Controles.dart';
+import 'package:controle_aprovacao/paginas/Login.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Autenticar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

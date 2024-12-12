@@ -1,5 +1,5 @@
-import 'package:ControleAprovacao/model/Model_ModulosContratados.dart';
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/model/Model_ModulosContratados.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,13 +11,9 @@ Future<void> BuscarRotinas() async {
 
   FirebaseFirestore.instance.collection('routines').get().then((querySnapshot) {
     for (var docSnapshot in querySnapshot.docs) {
-
-
-     
       debugPrint("Modulos  - Inicio");
       debugPrint(docSnapshot.data().toString());
       debugPrint("Modulos - Fim");
-      
 
       var cod3 = docSnapshot.data().remove('Requisição').toString();
       debugPrint("Requisicao: $cod3");

@@ -1,7 +1,7 @@
-import 'package:ControleAprovacao/model/Model_DNS.dart';
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
-import 'package:ControleAprovacao/model/Model_Usuario.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_ValidarDNS.dart';
+import 'package:controle_aprovacao/model/Model_DNS.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/model/Model_Usuario.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -33,13 +33,9 @@ void setMemory(String dns) async {
 
   // set DNS in memory
   prefs.setString("LOGIN_DNS", dns);
-  
 
   //Set client in memory
   FirebaseFirestore.instance.collection('users').get().then((querySnapshot) {
-    
-    
-
     for (var docSnapshot in querySnapshot.docs) {
       debugPrint(docSnapshot.data().toString());
 

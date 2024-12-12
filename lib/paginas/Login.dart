@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ControleAprovacao/components/ShowDialog.dart';
-// import 'package:ControleAprovacao/model/Model_Firebase.dart';
-import 'package:ControleAprovacao/paginas/Controles.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Autenticar.dart';
-import 'package:ControleAprovacao/model/Model_DNS.dart';
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_ValidarDNS.dart';
-import 'package:ControleAprovacao/requisicoes/set_Memory.dart';
+import 'package:controle_aprovacao/components/ShowDialog.dart';
+// import 'package:controle_aprovacao/model/Model_Firebase.dart';
+import 'package:controle_aprovacao/paginas/Controles.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Autenticar.dart';
+import 'package:controle_aprovacao/model/Model_DNS.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
+import 'package:controle_aprovacao/requisicoes/set_Memory.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -219,18 +219,18 @@ class _LoginState extends State<Login> {
             ));
     //Validate DNS
     //if (Model_Firebase().dns.contains(_controllerDNS.text)) {
-      // Save DNS and navigate
-      ResultadoDNS().conectado = true;
-      _dns.DNS = _controllerDNS.text;
-      _parametro.Url = _controllerDNS.text;
-      Navigator.pop(context);
-      setMemory(_controllerDNS.text);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Login()));
-   // } else {
-   //   Navigator.pop(context);
+    // Save DNS and navigate
+    ResultadoDNS().conectado = true;
+    _dns.DNS = _controllerDNS.text;
+    _parametro.Url = _controllerDNS.text;
+    Navigator.pop(context);
+    setMemory(_controllerDNS.text);
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const Login()));
+    // } else {
+    //   Navigator.pop(context);
     //  await _showErrorDialog(context);
-   // }
+    // }
   }
 
   Future<void> _showErrorDialog(BuildContext context) async {

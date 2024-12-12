@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
-import 'package:ControleAprovacao/model/Model_Usuario.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/model/Model_Usuario.dart';
 import 'package:xml/xml.dart' as xml;
 
 Model_Usuario usu = Model_Usuario();
@@ -46,8 +46,7 @@ Future<String> Cotacao(
 
     final tpResultado = parsedXml.findAllElements('tpResultado').single.text;
     final document = xml.XmlDocument.parse(response.body);
-    final list =
-        document.findAllElements('gridRetorno').map((node) async {
+    final list = document.findAllElements('gridRetorno').map((node) async {
       resultado = node
           .findElements('txtRet')
           .toString()
@@ -97,8 +96,7 @@ Future<String> Requisicao(int Ind, String CodEmp, String NumEme, String SeqEme,
       final parsedXml = xml.XmlDocument.parse(body);
       final resultado = parsedXml.findAllElements('resultado').single.text;
       final document = xml.XmlDocument.parse(response.body);
-      final list =
-          document.findAllElements('gridRetorno').map((node) async {
+      final list = document.findAllElements('gridRetorno').map((node) async {
         txtRet = node
             .findElements('txtRet')
             .toString()

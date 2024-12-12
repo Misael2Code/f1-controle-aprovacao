@@ -1,7 +1,7 @@
-import 'package:ControleAprovacao/components/showInformation.dart';
+import 'package:controle_aprovacao/components/showInformation.dart';
 import 'package:flutter/material.dart';
-import 'package:ControleAprovacao/model/Model_ModulosContratados.dart';
-import 'package:ControleAprovacao/paginas/Controles.dart';
+import 'package:controle_aprovacao/model/Model_ModulosContratados.dart';
+import 'package:controle_aprovacao/paginas/Controles.dart';
 
 class Modulos extends StatefulWidget {
   const Modulos({super.key});

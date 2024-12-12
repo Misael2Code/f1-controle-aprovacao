@@ -1,8 +1,8 @@
-import 'package:ControleAprovacao/components/showInformation.dart';
-import 'package:ControleAprovacao/model/Model_Campos.dart';
-import 'package:ControleAprovacao/model/Model_Usuario.dart';
-import 'package:ControleAprovacao/paginas/Controles.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Aprovar_Cancelar.dart';
+import 'package:controle_aprovacao/components/showInformation.dart';
+import 'package:controle_aprovacao/model/Model_Campos.dart';
+import 'package:controle_aprovacao/model/Model_Usuario.dart';
+import 'package:controle_aprovacao/paginas/Controles.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Aprovar_Cancelar.dart';
 import 'package:flutter/material.dart';
 
 late String apr;

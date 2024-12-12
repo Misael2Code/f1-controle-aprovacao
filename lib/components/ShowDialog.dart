@@ -1,4 +1,4 @@
-import 'package:ControleAprovacao/requisicoes/Rest_Autenticar.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Autenticar.dart';
 import 'package:flutter/material.dart';
 
 class DialogHelper {

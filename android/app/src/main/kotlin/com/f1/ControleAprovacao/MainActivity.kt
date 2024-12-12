@@ -1,4 +1,4 @@
-package com.example.f1_controle_aprovacao
+package com.f1.ControleAprovacao
 
 import io.flutter.embedding.android.FlutterActivity
 

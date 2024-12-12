@@ -1,9 +1,9 @@
-import 'package:ControleAprovacao/components/showInformation.dart';
-import 'package:ControleAprovacao/components/showItemDetail.dart';
+import 'package:controle_aprovacao/components/showInformation.dart';
+import 'package:controle_aprovacao/components/showItemDetail.dart';
 import 'package:flutter/material.dart';
-import 'package:ControleAprovacao/model/Model_Campos.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Aprovar_Cancelar.dart';
-import 'package:ControleAprovacao/requisicoes/Rest_Consulta.dart';
+import 'package:controle_aprovacao/model/Model_Campos.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Aprovar_Cancelar.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_Consulta.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import '../model/Model_ModulosContratados.dart';
 import '../model/Model_Usuario.dart';

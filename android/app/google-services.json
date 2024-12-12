@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:640921276858:android:dd85ec34f0576283f10d83",
         "android_client_info": {
-          "package_name": "com.example.ControleAprovacao"
+          "package_name": "com.f1.ControleAprovacao"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:640921276858:android:80cea36574f9482ff10d83",
         "android_client_info": {
-          "package_name": "com.example.controleAplicacao"
+          "package_name": "com.f1.ControleAprovacao"
         }
       },
       "oauth_client": [],
@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:640921276858:android:3c1307265e4dac1ef10d83",
         "android_client_info": {
-          "package_name": "com.example.untitled"
+          "package_name": "com.f1.ControleAprovacao"
         }
       },
       "oauth_client": [],

@@ -1,5 +1,5 @@
-import 'package:ControleAprovacao/model/Model_Parametro.dart';
-import 'package:ControleAprovacao/model/Model_Usuario.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/model/Model_Usuario.dart';
 import 'package:flutter/foundation.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:http/http.dart' as http;
@@ -15,7 +15,7 @@ Future<void> BuscarUsuario() async {
   final response = await http.post(
     Uri.parse(url),
     headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-    body: '''       
+    body: '''
           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.senior.com.br">
             <soapenv:Body>
               <ser:Usuario>
@@ -34,9 +34,9 @@ Future<void> BuscarUsuario() async {
 
   if (response.statusCode == 200) {
     final body = response.body;
-    
+
     //debugPrint(body);
-    
+
     final parsedXml = xml.XmlDocument.parse(body);
 
     final CodUsu = parsedXml.findAllElements('codUsu').single.text;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ControleAprovacao/model/TabBarController.dart';
-import 'package:ControleAprovacao/paginas/Modulos.dart';
-import 'package:ControleAprovacao/paginas/Consultas.dart';
+import 'package:controle_aprovacao/model/TabBarController.dart';
+import 'package:controle_aprovacao/paginas/Modulos.dart';
+import 'package:controle_aprovacao/paginas/Consultas.dart';
 
 class Controles extends StatefulWidget {
   final int setRot; // O valor que será passado
