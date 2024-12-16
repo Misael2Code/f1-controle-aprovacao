@@ -22,6 +22,8 @@ class _LoginState extends State<Login> {
   final TextEditingController _controllerUser = TextEditingController();
   final TextEditingController _controllerPass = TextEditingController();
   final TextEditingController _controllerDNS = TextEditingController();
+  bool obscureTextUser = false;
+  bool obscureTextPass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +101,7 @@ class _LoginState extends State<Login> {
                 _buildTextField(_controllerUser, Icons.supervisor_account_sharp,
                     'Usuário', 'Digite seu usuário'),
                 _buildTextField(_controllerPass, Icons.lock_person, 'Senha',
-                    'Digite sua senha',
-                    obscureText: true),
+                    'Digite sua senha'),
                 const SizedBox(height: 22),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -136,22 +137,41 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, IconData iconData,
-      String labelText, String hintText,
-      {bool obscureText = false}) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-          icon: Icon(
-            iconData,
-            color: Colors.blueGrey,
-          ),
-          label: Text(labelText),
-          hintText: hintText,
-          hintStyle: const TextStyle(fontSize: 12)),
-    );
-  }
+  Widget _buildTextField(
+  TextEditingController controller,
+  IconData iconData,
+  String labelText,
+  String hintText
+) {
+
+  return TextFormField(
+    controller: controller,
+    obscureText: labelText.contains('Usuário') ? obscureTextUser : obscureTextPass,
+    decoration: InputDecoration(
+      icon: Icon(
+        iconData,
+        color: Colors.blueAccent,
+      ),
+      label: Text(labelText),
+      hintText: hintText,
+      hintStyle: const TextStyle(fontSize: 12),
+      suffixIcon: labelText.contains('Senha')
+          ? IconButton(
+              icon: Icon(
+                obscureTextPass ? Icons.visibility_off : Icons.visibility,
+                color: Colors.blueAccent,
+              ),              
+              onPressed: () {
+                setState(() {
+                  obscureTextPass = !obscureTextPass;
+                });
+              },
+            )
+          : null, // Caso não seja um campo de senha, não exibe o ícone
+    ),
+  );
+}
+
 
   Future<void> _showDNSDialog(BuildContext context) async {
     if (_dns.DNS.isEmpty) {
