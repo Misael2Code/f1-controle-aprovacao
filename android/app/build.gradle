@@ -60,7 +60,8 @@ android {
    
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\Misael\\Documents\\F1\\WorkSpace DEV\\f1-controle-aprovacao/my-release-key.jks')
+            //storeFile file('C:\\Users\\Misael\\Documents\\F1\\WorkSpace DEV\\f1-controle-aprovacao/my-release-key.jks')
+            storeFile file('\\\\DESKTOP-QJO6QSO\\WorkSpace DEV\\f1-controle-aprovacao\\my-release-key.jks')
             storePassword 'aprovation'
             keyAlias 'my-key-alias'
             keyPassword 'aprovation'

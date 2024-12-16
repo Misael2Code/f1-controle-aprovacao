@@ -57,23 +57,25 @@ class _ControlesState extends State<Controles>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(width: 24),
-                        Image.asset(
-                          'image/logo_white.png',
-                          height: 44,
+                        Container(width: 48),
+                        Expanded(
+                          child: Image.asset(
+                            'image/logo_white.png',
+                            height: 44,
+                          ),
                         ),
                         IconButton(
                             onPressed: () {
-                              AlertDialog(
+                              showDialog(context: context, builder: (BuildContext context) => AlertDialog(
                                 title: const Text('Deseja sair?'),
                                 content: const Text(
                                     'Ao sair todos os seus dados de acesso serão apagados.'),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
-                                          Navigator.of(context).pop,
+                                          Navigator.pop(context, 'Não'),
                                       child: const Text('Não')),
                                   TextButton(
                                       onPressed: () {
@@ -86,8 +88,7 @@ class _ControlesState extends State<Controles>
                                       },
                                       child: const Text('Sair'))
                                 ],
-                              );
-                              disconnect();
+                              ));                              
                             },
                             icon: const Icon(
                               Icons.exit_to_app,

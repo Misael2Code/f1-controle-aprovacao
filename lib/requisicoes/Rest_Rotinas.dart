@@ -75,7 +75,7 @@ Future<void> BuscarRotinas() async {
       var cod69 = docSnapshot.data().remove('Entrega Relatórios').toString();
 
       //aqui
-      debugPrint("GetCli:" + p.GetCli);
+      debugPrint("GetCli:${p.GetCli}");
       if (cod3.contains('\'${p.GetCli}\'')) {
         mod.cod3 = true;
         mod.rotNap = '3';

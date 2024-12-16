@@ -40,7 +40,7 @@ void setMemory(String dns) async {
       debugPrint(docSnapshot.data().toString());
 
       Model_Parametro().Cli = docSnapshot.data().remove(dns);
-      debugPrint("Cliente salvo:" + Model_Parametro().GetCli);
+      debugPrint("Cliente salvo:${Model_Parametro().GetCli}");
       prefs.setString("LOGIN_CLI", Model_Parametro().GetCli);
     }
   });
