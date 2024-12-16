@@ -1,7 +1,12 @@
+import 'package:controle_aprovacao/model/Model_DNS.dart';
+import 'package:controle_aprovacao/model/Model_Parametro.dart';
+import 'package:controle_aprovacao/paginas/Login.dart';
+import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
 import 'package:flutter/material.dart';
 import 'package:controle_aprovacao/model/TabBarController.dart';
 import 'package:controle_aprovacao/paginas/Modulos.dart';
 import 'package:controle_aprovacao/paginas/Consultas.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Controles extends StatefulWidget {
   final int setRot; // O valor que será passado
@@ -54,10 +59,40 @@ class _ControlesState extends State<Controles>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Container(width: 24),
                         Image.asset(
                           'image/logo_white.png',
                           height: 44,
                         ),
+                        IconButton(
+                            onPressed: () {
+                              AlertDialog(
+                                title: const Text('Deseja sair?'),
+                                content: const Text(
+                                    'Ao sair todos os seus dados de acesso serão apagados.'),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop,
+                                      child: const Text('Não')),
+                                  TextButton(
+                                      onPressed: () {
+                                        disconnect();
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Login()));
+                                      },
+                                      child: const Text('Sair'))
+                                ],
+                              );
+                              disconnect();
+                            },
+                            icon: const Icon(
+                              Icons.exit_to_app,
+                              color: Colors.blue,
+                            ))
                       ],
                     ),
                     /*
@@ -262,5 +297,15 @@ class _ControlesState extends State<Controles>
       default:
         return 'Controle de Aprovação'; // Caso o setRot não corresponda
     }
+  }
+
+  void disconnect() async {
+    SharedPreferences p = await SharedPreferences.getInstance();
+    Model_Parametro par = Model_Parametro();
+    p.clear();
+    Model_DNS().DNS = '';
+    par.Cli = '';
+    par.Url = '';
+    ResultadoDNS().conectado = false;
   }
 }
