@@ -2,6 +2,7 @@ import 'package:controle_aprovacao/model/Model_DNS.dart';
 import 'package:controle_aprovacao/model/Model_Parametro.dart';
 import 'package:controle_aprovacao/paginas/Login.dart';
 import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
+import 'package:controle_aprovacao/requisicoes/disconnect.dart';
 import 'package:flutter/material.dart';
 import 'package:controle_aprovacao/model/TabBarController.dart';
 import 'package:controle_aprovacao/paginas/Modulos.dart';
@@ -79,7 +80,7 @@ class _ControlesState extends State<Controles>
                                       child: const Text('Não')),
                                   TextButton(
                                       onPressed: () {
-                                        disconnect();
+                                        Disconnect().disconnect();
                                         Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
@@ -298,15 +299,5 @@ class _ControlesState extends State<Controles>
       default:
         return 'Controle de Aprovação'; // Caso o setRot não corresponda
     }
-  }
-
-  void disconnect() async {
-    SharedPreferences p = await SharedPreferences.getInstance();
-    Model_Parametro par = Model_Parametro();
-    p.clear();
-    Model_DNS().DNS = '';
-    par.Cli = '';
-    par.Url = '';
-    ResultadoDNS().conectado = false;
   }
 }

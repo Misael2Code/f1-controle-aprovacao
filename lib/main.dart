@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:controle_aprovacao/firebase_options.dart';
+import 'package:controle_aprovacao/paginas/Servidor.dart';
 import 'package:controle_aprovacao/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,8 +26,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Welcome(),
+    return MaterialApp(
+      home: Servidor(),
+      //home: Welcome(),
       debugShowCheckedModeBanner: false,
     );
   }

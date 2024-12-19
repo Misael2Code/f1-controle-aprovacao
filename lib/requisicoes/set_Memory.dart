@@ -37,10 +37,8 @@ void setMemory(String dns) async {
   //Set client in memory
   FirebaseFirestore.instance.collection('users').get().then((querySnapshot) {
     for (var docSnapshot in querySnapshot.docs) {
-      debugPrint(docSnapshot.data().toString());
 
       Model_Parametro().Cli = docSnapshot.data().remove(dns);
-      debugPrint("Cliente salvo:${Model_Parametro().GetCli}");
       prefs.setString("LOGIN_CLI", Model_Parametro().GetCli);
     }
   });
