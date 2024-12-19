@@ -1,3 +1,6 @@
+import 'package:controle_aprovacao/paginas/Servidor.dart';
+import 'package:controle_aprovacao/requisicoes/disconnect.dart';
+import 'package:controle_aprovacao/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:controle_aprovacao/components/ShowDialog.dart';
 // import 'package:controle_aprovacao/model/Model_Firebase.dart';
@@ -5,7 +8,6 @@ import 'package:controle_aprovacao/paginas/Controles.dart';
 import 'package:controle_aprovacao/requisicoes/Rest_Autenticar.dart';
 import 'package:controle_aprovacao/model/Model_DNS.dart';
 import 'package:controle_aprovacao/model/Model_Parametro.dart';
-import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
 import 'package:controle_aprovacao/requisicoes/set_Memory.dart';
 
 class Login extends StatefulWidget {
@@ -21,9 +23,12 @@ class _LoginState extends State<Login> {
   final double _sizeLogo = 70.0;
   final TextEditingController _controllerUser = TextEditingController();
   final TextEditingController _controllerPass = TextEditingController();
-  final TextEditingController _controllerDNS = TextEditingController();
+  bool isLoading = false;
+  bool isDisconnecting = false;
   bool obscureTextUser = false;
   bool obscureTextPass = true;
+  String erroTextUser = '';
+  String erroTextPass = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,105 +36,111 @@ class _LoginState extends State<Login> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Center(
-          child: IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: ResultadoDNS().conectado
-                  ? Colors.lightGreenAccent
-                  : Colors.white,
-            ),
-            onPressed: () => _showDNSDialog(context),
-          ),
-        ),
-        elevation: 32,
-        backgroundColor: const Color.fromRGBO(0, 74, 173, 100),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(100)),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            width: 320,
-            decoration: const BoxDecoration(color: Colors.white24),
-            child: Column(
-              children: [
-                if (_parametro.GetUrl.isEmpty) ...[
-                  const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: Text('Servidor não Conectado!',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold))),
-                      SizedBox(height: 8),
-                      Wrap(
-                        children: [
-                          Text('Clique no botão ',
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 12)),
-                          Icon(Icons.settings, color: Colors.red),
-                          Text(' para configurar um servidor.',
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 12)),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-                Container(
-                  color: Colors.transparent,
-                  padding: const EdgeInsets.all(12),
-                  child: Image.asset('image/logo.png', height: _sizeLogo),
-                ),
-                const SizedBox(height: 2),
-                const Divider(color: Colors.blueGrey),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 6),
-                  child: Text("CONTROLE DE APROVAÇÃO",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.blueGrey,
-                          fontSize: 14)),
-                ),
-                const SizedBox(height: 4),
-                _buildTextField(_controllerUser, Icons.supervisor_account_sharp,
-                    'Usuário', 'Digite seu usuário'),
-                _buildTextField(_controllerPass, Icons.lock_person, 'Senha',
-                    'Digite sua senha'),
-                const SizedBox(height: 22),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(0, 74, 173, 100)),
-                  onPressed: () => _authenticateUser(context),
-                  child: const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text('Conectar',
-                          style: TextStyle(color: Colors.white))),
-                ),
-                const SizedBox(height: 65),
-                Container(
-                  alignment: Alignment.center,
-                  child: const Column(children: [
-                    Text('from:',
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 8,
-                            color: Colors.grey)),
-                    SizedBox(height: 8),
-                    Text('F1 Tecnologia e Consultoria Ltda.',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.grey))
-                  ]),
-                )
+        title: Row(mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(onPressed: () {
+          showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+              title: const Text('Deseja desconectar?'),
+              content: const Text(
+                  'Ao desconectar os dados do servidor serão apagados.'),
+              actions: [
+                TextButton(
+                    onPressed: () =>
+                        Navigator.pop(context, 'Não'),
+                    child: const Text('Não')),
+                isDisconnecting ? const CircularProgressIndicator() : TextButton(
+                    onPressed: () async {
+                      setState(() {
+                        isDisconnecting = true;
+                      });
+                        Disconnect().disconnectServer();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Servidor()));
+                    },
+                    child: const Text('Sair'))
               ],
+            ));           
+        },
+        icon: const Icon(Icons.power_settings_new, color: Colors.red,)
+        )
+      ],)),
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue,
+                          spreadRadius: 1,
+                          blurRadius: 9,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: Colors.white),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    color: Colors.transparent,
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset('image/logo.png', height: _sizeLogo),
+                  ),
+                  const SizedBox(height: 12),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 6),
+                    child: Text("CONTROLE DE APROVAÇÃO",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                            fontSize: 14,)),
+                  ),
+                  const SizedBox(height: 4),
+                  _buildTextField(_controllerUser, Icons.supervisor_account_sharp,
+                      'Usuário', 'Digite seu usuário'),
+                      const SizedBox(height: 12),
+                  _buildTextField(_controllerPass, Icons.lock_person, 'Senha',
+                      'Digite sua senha'),
+                  const SizedBox(height: 22),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                        backgroundColor: const Color.fromRGBO(13, 71, 161, 1)),
+                    onPressed: ()  {
+                        if(_controllerUser.text.isEmpty) {
+                          setState(() {
+                            erroTextUser = "Informe um Usuário";  
+                            if(_controllerPass.text.isEmpty) {
+                              erroTextPass = "Informe uma Senha";
+                            }
+                          });                        
+                        }
+                        else if(_controllerPass.text.isEmpty) {
+                          erroTextPass = "Informe uma Senha";
+                        } else {
+                          erroTextUser = '';
+                          erroTextPass = '';
+                          setState(() {
+                            isLoading = true; 
+                          });                        
+                          _authenticateUser(context);}
+                        },
+                    child: Padding(
+                        padding: const EdgeInsets.all(1),
+                        child: isLoading ? Transform.scale(scale: 0.5, 
+                          child: const CircularProgressIndicator(color: Colors.white,)) : 
+                          const Text('Conectar',
+                            style: TextStyle(color: Colors.white))),
+                  ),                
+                ],
+              ),
             ),
           ),
         ),
@@ -143,18 +154,29 @@ class _LoginState extends State<Login> {
   String labelText,
   String hintText
 ) {
+  late String textError;
+  switch(labelText) {
+    case 'Usuário':
+      textError = erroTextUser;      
+      break;
+    case 'Senha':
+      textError = erroTextPass;
+  }
 
   return TextFormField(
     controller: controller,
     obscureText: labelText.contains('Usuário') ? obscureTextUser : obscureTextPass,
     decoration: InputDecoration(
-      icon: Icon(
+      errorText: textError.isEmpty ? null : textError,
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16))),
+      prefixIcon: Icon(
         iconData,
-        color: Colors.blueAccent,
+        color: Colors.blue,
       ),
       label: Text(labelText),
       hintText: hintText,
-      hintStyle: const TextStyle(fontSize: 12),
+      hintStyle: const TextStyle(fontSize: 12),      
       suffixIcon: labelText.contains('Senha')
           ? IconButton(
               icon: Icon(
@@ -172,139 +194,31 @@ class _LoginState extends State<Login> {
   );
 }
 
-
-  Future<void> _showDNSDialog(BuildContext context) async {
-    if (_dns.DNS.isEmpty) {
-      await _showInputDialog(context);
-    } else {
-      await _showChangeDNSDialog(context);
-    }
-  }
-
-  Future<void> _showInputDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Informe o Servidor'),
-          content: TextFormField(
-            controller: _controllerDNS,
-            decoration: const InputDecoration(
-                hintText: 'Ex.: https://nome_servidor:porta'),
-          ),
-          actions: [
-            ElevatedButton(
-                onPressed: () async => await _saveDNS(context),
-                child: const Text('Salvar')),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showChangeDNSDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Aviso'),
-          content: Wrap(children: [
-            const Text('O endereço '),
-            Text(_parametro.GetUrl,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const Text(' já está conectado. Deseja alterar?')
-          ]),
-          actions: [
-            ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Não')),
-            ElevatedButton(
-                onPressed: () => _showInputDialog(context),
-                child: const Text('Alterar')),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _saveDNS(BuildContext context) async {
-    // Show loading dialog
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => const AlertDialog(
-              content: Row(
-                children: [CircularProgressIndicator()],
-              ),
-            ));
-    //Validate DNS
-    //if (Model_Firebase().dns.contains(_controllerDNS.text)) {
-    // Save DNS and navigate
-    ResultadoDNS().conectado = true;
-    _dns.DNS = _controllerDNS.text;
-    _parametro.Url = _controllerDNS.text;
-    Navigator.pop(context);
-    setMemory(_controllerDNS.text);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Login()));
-    // } else {
-    //   Navigator.pop(context);
-    //  await _showErrorDialog(context);
-    // }
-  }
-
-  Future<void> _showErrorDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Atenção!'),
-          content: const Text(
-              'O servidor informado não consta em nosso banco de dados. Por favor, entre em contato conosco.'),
-          actions: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('OK')),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _authenticateUser(BuildContext context) async {
-    bool formValid = await validateForm();
-    if (formValid) {
-      DialogHelper.showConnecting(context, 'Conectando...');
+  Future<void> _authenticateUser(BuildContext context) async {      
+      //DialogHelper.showConnecting(context, 'Conectando...');
       bool connect = await autenticacao(_parametro.GetCli, _parametro.GetUrl,
           _controllerUser.text, _controllerPass.text);
 
       if (connect) {
         setUserMemory(_controllerUser.text, _controllerPass.text);
-        Navigator.of(context).pop();
+        //Navigator.of(context).pop();
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => const Controles(setRot: 0)));
+        setState(() {
+          isLoading = false;
+        });
       } else {
-        Navigator.of(context).pop();
-        DialogHelper.showLoginFailed(context, 'Falha no Login!');
-      }
-    }
-  }
-
-  Future<bool> validateForm() async {
-    if (_dns.DNS.isEmpty) {
-      await _showAlertDialog('Atenção!',
-          'Não é possível conectar sem informar o "servidor:porta" para acesso.');
-      return false;
-    } else if (_controllerUser.text.isEmpty || _controllerPass.text.isEmpty) {
-      await _showAlertDialog(
-          'Dados Incompletos', 'Por favor, informe usuário e senha');
-      return false;
-    }
-    return true;
+        setState(() {
+          isLoading = false;
+        });   
+         setState(() {
+           erroTextUser = 'Usuário ou senha incorretos';
+           erroTextPass = 'Usuário ou senha incorretos';
+           isLoading = false;
+         });    
+      }      
   }
 
   Future<void> _showAlertDialog(String title, String content) async {

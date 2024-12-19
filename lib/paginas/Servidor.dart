@@ -23,6 +23,7 @@ class _ServidorState extends State<Servidor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: false,),
       body: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(16),
@@ -33,7 +34,7 @@ class _ServidorState extends State<Servidor> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     boxShadow: const [
                       BoxShadow(
@@ -89,7 +90,7 @@ class _ServidorState extends State<Servidor> {
                       _changeEnable
                           ? ElevatedButton(
                               onPressed: () async {
-                                Disconnect().disconnect();
+                                await Disconnect().disconnectServer();
                                 Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(

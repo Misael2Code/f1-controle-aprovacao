@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Servidor(),
-      //home: Welcome(),
+    return const MaterialApp(
+      //home: Servidor(),
+      home: Welcome(),
       debugShowCheckedModeBanner: false,
     );
   }

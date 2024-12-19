@@ -1,13 +1,10 @@
-import 'package:controle_aprovacao/model/Model_DNS.dart';
-import 'package:controle_aprovacao/model/Model_Parametro.dart';
 import 'package:controle_aprovacao/paginas/Login.dart';
-import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
 import 'package:controle_aprovacao/requisicoes/disconnect.dart';
+import 'package:controle_aprovacao/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:controle_aprovacao/model/TabBarController.dart';
 import 'package:controle_aprovacao/paginas/Modulos.dart';
 import 'package:controle_aprovacao/paginas/Consultas.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Controles extends StatefulWidget {
   final int setRot; // O valor que será passado
@@ -21,6 +18,7 @@ class Controles extends StatefulWidget {
 class _ControlesState extends State<Controles>
     with SingleTickerProviderStateMixin {
   late TabBarController tabController; // Inicializando com 'late'
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -72,22 +70,26 @@ class _ControlesState extends State<Controles>
                               showDialog(context: context, builder: (BuildContext context) => AlertDialog(
                                 title: const Text('Deseja sair?'),
                                 content: const Text(
-                                    'Ao sair todos os seus dados de acesso serão apagados.'),
+                                    'Ao confirmar seu usuário e sua senha serão apagados.'),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, 'Não'),
                                       child: const Text('Não')),
                                   TextButton(
-                                      onPressed: () {
-                                        Disconnect().disconnect();
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+                                        await Disconnect().disconnectUser();
                                         Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     const Login()));
                                       },
-                                      child: const Text('Sair'))
+                                      child: _isLoading ? const CircularProgressIndicator() : 
+                                      const Text('Sair'))
                                 ],
                               ));                              
                             },
@@ -97,18 +99,6 @@ class _ControlesState extends State<Controles>
                             ))
                       ],
                     ),
-                    /*
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          getModuleTitle(
-                              widget.setRot), // Usando o setRot do widget
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 16),
-                        ),
-                      ],
-                    ),*/
                     const SizedBox(
                       height: 12,
                     )

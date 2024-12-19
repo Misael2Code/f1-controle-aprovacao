@@ -3,7 +3,6 @@ import 'package:controle_aprovacao/model/Model_Parametro.dart';
 import 'package:controle_aprovacao/model/Model_Usuario.dart';
 import 'package:controle_aprovacao/requisicoes/Rest_ValidarDNS.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

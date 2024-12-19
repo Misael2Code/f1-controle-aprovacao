@@ -8,7 +8,7 @@ class Model_Parametro {
   String get GetUrl => _Url;
 
   set Url(String value) {
-    debugPrint("Servidor: $value");
+    debugPrint("Servidor: $value"); 
 
     _Url = value;
     String newValue = value.replaceAll(' ', '');
@@ -26,4 +26,12 @@ class Model_Parametro {
   }
 
   String get GetServer => _Server;
+
+  void clear() {
+    _Url = '';
+    _Server = '';
+    _Cli = '';   
+    debugPrint("Limpou Servidor: $_Url");  
+    debugPrint("Limpou Cliente: $_Cli");  
+  }
 }
